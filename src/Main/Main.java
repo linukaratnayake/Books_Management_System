@@ -21,9 +21,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        // TODO, remove this line later.
-        DBConnect.getConnection();
-
         launch(args);
     }
 }

@@ -1,10 +1,14 @@
 package Main;
 
-import javafx.event.ActionEvent;
+import DBConnection.DBConnect;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class LoginController {
 
@@ -14,17 +18,30 @@ public class LoginController {
     @FXML
     private PasswordField txtPassword;
 
-    @FXML
-    private Button btnLogin;
+    public void btnLoginClicked(){
+        String uName = txtUsername.getText();
+        String pWord = txtPassword.getText();
+        String query = "SELECT * from loginData WHERE username = '"+uName+"' AND password = '"+pWord+"';";
 
-    @FXML
-    private Button btnCancel;
+        try {
+            Connection con = DBConnect.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
 
-    public void btnLoginClicked(ActionEvent event){
-
+            if (rs.next()){
+                System.out.println("Login Successful!");
+                txtUsername.setText("");
+                txtPassword.setText("");
+            }else{
+                System.out.println("Login Failed!");
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void btnCancelClicked(ActionEvent event){
+    public void btnCancelClicked(){
         System.exit(0);
     }
 }
