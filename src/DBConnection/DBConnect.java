@@ -19,6 +19,7 @@ public class DBConnect {
 
         URL DB_URL = DBConnect.class.getResource("/DB/BMS_DB.db");
         String DBPath = String.format("jdbc:sqlite:%s", DB_URL.toString());
+
         try {
             con = DriverManager.getConnection(DBPath);
             System.out.println("Database Connection Successful!");
