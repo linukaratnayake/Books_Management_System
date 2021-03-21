@@ -4,6 +4,8 @@ import DBConnection.DBConnect;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,5 +45,11 @@ public class LoginController {
 
     public void btnCancelClicked(){
         System.exit(0);
+    }
+
+    public void enterPressed(KeyEvent event){
+        if (event.getCode().equals(KeyCode.ENTER)){
+            btnLoginClicked();
+        }
     }
 }

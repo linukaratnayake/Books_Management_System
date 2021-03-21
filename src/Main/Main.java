@@ -1,6 +1,5 @@
 package Main;
 
-import DBConnection.DBConnect;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +15,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Main.primaryStage.setTitle("Login | Books Management System (BMS)");
         Main.primaryStage.setScene(new Scene(root));
+        Main.primaryStage.setResizable(false);
         Main.primaryStage.show();
     }
 
