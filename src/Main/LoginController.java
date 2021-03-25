@@ -2,11 +2,17 @@ package Main;
 
 import DBConnection.DBConnect;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,9 +26,20 @@ public class LoginController {
     @FXML
     private PasswordField txtPassword;
 
+    private String uName;
+    private String pWord;
+
+    public void newAccountCreated(String uName, String pWord){
+        this.uName = uName;
+        this.pWord = pWord;
+        btnLoginClicked();
+    }
+
     public void btnLoginClicked(){
-        String uName = txtUsername.getText();
-        String pWord = txtPassword.getText();
+        if (uName == null && pWord == null){
+            this.uName = txtUsername.getText();
+            this.pWord = txtPassword.getText();
+        }
         String query = "SELECT * from loginData WHERE username = '"+uName+"' AND password = '"+pWord+"';";
 
         try {
@@ -32,8 +49,7 @@ public class LoginController {
 
             if (rs.next()){
                 System.out.println("Login Successful!");
-                txtUsername.setText("");
-                txtPassword.setText("");
+                // TODO - Add code to direct to the next Stage.
             }else{
                 System.out.println("Login Failed!");
             }
@@ -41,6 +57,8 @@ public class LoginController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        uName = null;
+        pWord = null;
     }
 
     public void btnCancelClicked(){
@@ -50,6 +68,21 @@ public class LoginController {
     public void enterPressed(KeyEvent event){
         if (event.getCode().equals(KeyCode.ENTER)){
             btnLoginClicked();
+        }
+    }
+
+    public void btnCreateAccountClicked(){
+        Stage stageForNewUser = new Stage();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("LoginNewUser.fxml"));
+            stageForNewUser.setTitle("Create Account | Books Management System (BMS)");
+            stageForNewUser.setScene(new Scene(root));
+            stageForNewUser.setResizable(false);
+            stageForNewUser.initOwner(Main.primaryStage);
+            stageForNewUser.initModality(Modality.APPLICATION_MODAL);
+            stageForNewUser.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
