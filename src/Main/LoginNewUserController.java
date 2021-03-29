@@ -47,7 +47,24 @@ public class LoginNewUserController {
             Statement stmt = con.createStatement();
             String query = "SELECT * FROM loginData WHERE username = '"+username+"'";
             ResultSet rs = stmt.executeQuery(query);
-            usernameOK = !rs.next();
+            this.usernameOK = !rs.next();
+
+            if (this.usernameOK && !username.isBlank()) {
+                txtNewUsername.setStyle("-fx-focus-color: -fx-control-inner-background;\n" +
+                        "    -fx-faint-focus-color: -fx-control-inner-background;\n" +
+                        "    -fx-border-width: 2px;\n" +
+                        "    -fx-border-style: solid;\n" +
+                        "    -fx-border-radius: 3px;\n" +
+                        "    -fx-border-color: #009900;");
+            } else {
+                txtNewUsername.setStyle("-fx-focus-color: -fx-control-inner-background;\n" +
+                        "    -fx-faint-focus-color: -fx-control-inner-background;\n" +
+                        "    -fx-border-width: 2px;\n" +
+                        "    -fx-border-style: solid;\n" +
+                        "    -fx-border-radius: 3px;\n" +
+                        "    -fx-border-color: #CC0000;");
+            }
+
             con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -56,7 +73,7 @@ public class LoginNewUserController {
 
     public void btnSignUpClicked(){
         boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText());
-        username = txtNewUsername.getText();
+        this.username = txtNewUsername.getText();
         String password = txtNewPassword.getText();
         if (this.usernameOK && passwordOK){
 
@@ -64,7 +81,7 @@ public class LoginNewUserController {
                 Connection con = DBConnect.getConnection();
                 Statement stmt = con.createStatement();
                 String query = "INSERT INTO loginData (username, password) VALUES ('"+username+"', '"+ password +"');";
-                executed = !stmt.execute(query);
+                this.executed = !stmt.execute(query);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -73,11 +90,11 @@ public class LoginNewUserController {
             System.out.println("Username or Password Error!");
         }
 
-        if (executed) {
+        if (this.executed) {
             System.out.println("New Account Added Successfully!");
             btnResetClicked();
             LoginController newUserCredentials = new LoginController();
-            newUserCredentials.newAccountCreated(username, password);
+            newUserCredentials.newAccountCreated(this.username, password);
             btnCancelClicked();
         } else {
             System.out.println("Unable to create the account.");
