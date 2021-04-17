@@ -7,12 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    static Stage primaryStage;
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Main.primaryStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
         Main.primaryStage.setTitle("Login | Books Management System (BMS)");
         Main.primaryStage.setScene(new Scene(root));
         Main.primaryStage.setResizable(false);

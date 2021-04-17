@@ -1,4 +1,4 @@
-package Main;
+package Login;
 
 import DBConnection.DBConnect;
 import javafx.fxml.FXML;
@@ -50,24 +50,26 @@ public class LoginNewUserController {
             this.usernameOK = !rs.next();
 
             if (this.usernameOK && !username.isBlank()) {
-                txtNewUsername.setStyle("-fx-focus-color: -fx-control-inner-background;\n" +
-                        "    -fx-faint-focus-color: -fx-control-inner-background;\n" +
-                        "    -fx-border-width: 2px;\n" +
-                        "    -fx-border-style: solid;\n" +
-                        "    -fx-border-radius: 3px;\n" +
-                        "    -fx-border-color: #009900;");
+                txtNewUsername.setStyle("""
+                        -fx-focus-color: -fx-control-inner-background;
+                            -fx-faint-focus-color: -fx-control-inner-background;
+                            -fx-border-width: 2px;
+                            -fx-border-style: solid;
+                            -fx-border-radius: 3px;
+                            -fx-border-color: #009900;""");
             } else {
-                txtNewUsername.setStyle("-fx-focus-color: -fx-control-inner-background;\n" +
-                        "    -fx-faint-focus-color: -fx-control-inner-background;\n" +
-                        "    -fx-border-width: 2px;\n" +
-                        "    -fx-border-style: solid;\n" +
-                        "    -fx-border-radius: 3px;\n" +
-                        "    -fx-border-color: #CC0000;");
+                txtNewUsername.setStyle("""
+                        -fx-focus-color: -fx-control-inner-background;
+                            -fx-faint-focus-color: -fx-control-inner-background;
+                            -fx-border-width: 2px;
+                            -fx-border-style: solid;
+                            -fx-border-radius: 3px;
+                            -fx-border-color: #CC0000;""");
             }
 
             con.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -82,8 +84,9 @@ public class LoginNewUserController {
                 Statement stmt = con.createStatement();
                 String query = "INSERT INTO loginData (username, password) VALUES ('"+username+"', '"+ password +"');";
                 this.executed = !stmt.execute(query);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
         } else {

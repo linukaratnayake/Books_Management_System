@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="423.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/15.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.LoginNewUserController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginNewUserController">
    <Label layoutX="94.0" layoutY="42.0" text="Login | Create New User">
       <font>
          <Font name="System Bold" size="18.0"/>
