@@ -2,17 +2,22 @@ package Login;
 
 import DBConnection.DBConnect;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ResourceBundle;
 
-public class LoginNewUserController {
+public class LoginNewUserController implements Initializable {
     @FXML
     private TextField txtNewUsername;
 
@@ -25,9 +30,17 @@ public class LoginNewUserController {
     @FXML
     private Button btnCancel;
 
+    @FXML
+    private ImageView ivLogo;
+
     private String username;
     private boolean usernameOK = false;
     private boolean executed = false;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/Logo.png"))));
+    }
 
     public void btnCancelClicked(){
         ((Stage)btnCancel.getScene().getWindow()).close();
@@ -74,6 +87,7 @@ public class LoginNewUserController {
     }
 
     public void btnSignUpClicked(){
+        // TODO - Add Code to detect empty username and password.
         boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText());
         this.username = txtNewUsername.getText();
         String password = txtNewPassword.getText();

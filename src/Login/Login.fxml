@@ -8,46 +8,69 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="354.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
-   <Label layoutX="226.0" layoutY="39.0" text="Login" textAlignment="CENTER">
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font>
-   </Label>
-   <Label layoutX="98.0" layoutY="105.0" text="Username:">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <Label layoutX="100.0" layoutY="162.0" text="Password:">
-      <font>
-         <Font size="14.0" />
-      </font>
-   </Label>
-   <TextField fx:id="txtUsername" layoutX="206.0" layoutY="100.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="193.0" promptText="Type username here.">
-      <font>
-         <Font name="Times New Roman" size="14.0" />
-      </font>
-   </TextField>
-   <PasswordField fx:id="txtPassword" layoutX="206.0" layoutY="158.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="194.0" promptText="Type password here.">
-      <font>
-         <Font name="Times New Roman" size="14.0" />
-      </font>
-   </PasswordField>
-   <Button layoutX="289.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefWidth="100.0" text="Login">
-      <font>
-         <Font name="System Bold" size="16.0" />
-      </font>
-   </Button>
-   <Button layoutX="112.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" text="Cancel">
-      <font>
-         <Font name="System Bold" size="16.0" />
-      </font>
-   </Button>
-   <ImageView fitHeight="106.0" fitWidth="117.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true" />
-   <Button layoutX="176.0" layoutY="286.0" mnemonicParsing="false" onAction="#btnCreateAccountClicked" text="Create New User">
-      <font>
-         <Font name="System Bold" size="16.0" />
-      </font>
-   </Button>
+<AnchorPane prefHeight="406.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
+   <AnchorPane layoutY="112.0" prefHeight="302.0" prefWidth="502.0" style="-fx-background-color: #f2d691;">
+      <Label layoutX="228.0" layoutY="14.0" text="Login" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0"/>
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="66.0" text="Username:">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="123.0" text="Password:">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="txtUsername" layoutX="208.0" layoutY="61.0" onKeyPressed="#enterPressed" prefHeight="30.0"
+                 prefWidth="193.0" promptText="Type username here.">
+         <font>
+            <Font name="Times New Roman" size="14.0"/>
+         </font>
+      </TextField>
+      <PasswordField fx:id="txtPassword" layoutX="208.0" layoutY="119.0" onKeyPressed="#enterPressed" prefHeight="30.0"
+                     prefWidth="194.0" promptText="Type password here.">
+         <font>
+            <Font name="Times New Roman" size="14.0"/>
+         </font>
+      </PasswordField>
+      <Button layoutX="291.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefWidth="100.0"
+              text="Login">
+         <font>
+            <Font name="System Bold" size="16.0"/>
+         </font>
+      </Button>
+      <Button layoutX="114.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0"
+              text="Cancel">
+         <font>
+            <Font name="System Bold" size="16.0"/>
+         </font>
+      </Button>
+      <Label fx:id="lblCreateNewAccount" alignment="CENTER" layoutX="178.0" layoutY="183.0"
+             onMouseClicked="#btnCreateAccountClicked" onMouseEntered="#btnCreateAccountHovered"
+             onMouseExited="#btnCreateAccountNotHovered" prefHeight="26.0" prefWidth="147.0" text="Create New User"
+             textAlignment="CENTER" textFill="#2300d5">
+         <font>
+            <Font size="16.0"/>
+         </font>
+      </Label>
+   </AnchorPane>
+   <AnchorPane prefHeight="112.0" prefWidth="502.0" style="-fx-background-color: #e6bf5e;" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label layoutX="128.0" layoutY="24.0" text="Books Management System (BMS)">
+         <font>
+            <Font name="System Bold" size="22.0"/>
+         </font>
+      </Label>
+      <ImageView fx:id="ivLogo" fitHeight="93.0" fitWidth="112.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true"
+                 preserveRatio="true"/>
+      <Label layoutX="128.0" layoutY="68.0" text="By Linuka Ratnayake">
+         <font>
+            <Font name="System Bold" size="14.0"/>
+         </font>
+      </Label>
+   </AnchorPane>
 </AnchorPane>
