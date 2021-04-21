@@ -2,6 +2,8 @@ package Login;
 
 import DBConnection.DBConnect;
 import Main.Main;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,15 +42,25 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView ivLogo;
 
+    private String fullName;
     private String uName;
     private String pWord;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+        lblCreateNewAccount.setFocusTraversable(true);
+        lblCreateNewAccount.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if (lblCreateNewAccount.isFocused()) {
+                btnCreateAccountHovered();
+            } else {
+                btnCreateAccountNotHovered();
+            }
+        });
     }
 
-    public void newAccountCreated(String uName, String pWord){
+    public void newAccountCreated(String fullName, String uName, String pWord){
+        this.fullName = fullName;
         this.uName = uName;
         this.pWord = pWord;
         btnLoginClicked();
@@ -100,6 +112,7 @@ public class LoginController implements Initializable {
             stageForNewUser.setResizable(false);
             stageForNewUser.initOwner(Main.primaryStage);
             stageForNewUser.initModality(Modality.APPLICATION_MODAL);
+            stageForNewUser.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
             stageForNewUser.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +125,12 @@ public class LoginController implements Initializable {
 
     public void btnCreateAccountNotHovered(){
         lblCreateNewAccount.setStyle("-fx-text-fill: #2300D5; -fx-font-size: 16px;");
+    }
+
+    public void enterPressedOnCreateNewUser(KeyEvent event){
+        if (event.getCode().equals(KeyCode.ENTER)){
+            btnCreateAccountClicked();
+        }
     }
 
 }

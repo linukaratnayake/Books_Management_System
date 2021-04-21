@@ -19,6 +19,9 @@ import java.util.ResourceBundle;
 
 public class LoginNewUserController implements Initializable {
     @FXML
+    private TextField txtFullName;
+
+    @FXML
     private TextField txtNewUsername;
 
     @FXML
@@ -89,6 +92,7 @@ public class LoginNewUserController implements Initializable {
     public void btnSignUpClicked(){
         // TODO - Add Code to detect empty username and password.
         boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText());
+        String fullName = txtFullName.getText();
         this.username = txtNewUsername.getText();
         String password = txtNewPassword.getText();
         if (this.usernameOK && passwordOK){
@@ -96,7 +100,7 @@ public class LoginNewUserController implements Initializable {
             try {
                 Connection con = DBConnect.getConnection();
                 Statement stmt = con.createStatement();
-                String query = "INSERT INTO loginData (username, password) VALUES ('"+username+"', '"+ password +"');";
+                String query = "INSERT INTO loginData (fullName, username, password) VALUES ('"+fullName+"', '"+username+"', '"+ password +"');";
                 this.executed = !stmt.execute(query);
                 con.close();
             } catch (SQLException e) {
@@ -111,7 +115,7 @@ public class LoginNewUserController implements Initializable {
             System.out.println("New Account Added Successfully!");
             btnResetClicked();
             LoginController newUserCredentials = new LoginController();
-            newUserCredentials.newAccountCreated(this.username, password);
+            newUserCredentials.newAccountCreated(fullName, this.username, password);
             btnCancelClicked();
         } else {
             System.out.println("Unable to create the account.");
