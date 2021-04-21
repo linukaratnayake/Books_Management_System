@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow.MainWindowController">
+    <AnchorPane layoutX="-3.0" layoutY="7.0" prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: #e6bf5e; -fx-border-style: hidden hidden solid hidden; -fx-border-color: White; -fx-border-width: 3px;" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="7.0">
+        <Label layoutX="273.0" layoutY="10.0" text="Books Management System (BMS)">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="ivLogo" fitHeight="99.0" fitWidth="118.0" layoutX="88.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+        <Label layoutX="274.0" layoutY="63.0" text="By Linuka Ratnayake">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="934.0" layoutY="7.0" prefHeight="100.0" prefWidth="343.0"
+                    style="-fx-border-style: hidden hidden hidden solid; -fx-border-color: White; -fx-border-width: 3px;">
+            <Label fx:id="lblFullName" layoutX="82.0" layoutY="20.0" text="firstName lastName">
+                <font>
+                    <Font name="System Bold" size="20.0"/>
+                </font>
+            </Label>
+            <Label fx:id="lblUsername" layoutX="83.0" layoutY="65.0" text="\@username">
+                <font>
+                    <Font name="Consolas" size="16.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
+    </AnchorPane>
+    <AnchorPane layoutX="1.0" layoutY="125.0" prefHeight="594.0" prefWidth="258.0"
+                style="-fx-background-color: #eeeebb;">
+        <Label layoutX="39.0" layoutY="43.0" text="My Books">
+           <font>
+               <Font name="System Bold" size="24.0"/>
+           </font>
+        </Label>
+        <Label layoutX="39.0" layoutY="108.0" text="Burrowed Books">
+           <font>
+               <Font name="System Bold" size="24.0"/>
+           </font>
+        </Label>
+        <Label layoutX="40.0" layoutY="168.0" text="To be Returned">
+           <font>
+               <Font name="System Bold" size="24.0"/>
+           </font>
+        </Label>
+        <Label layoutX="42.0" layoutY="237.0" text="Finished Reading">
+           <font>
+               <Font name="System Bold" size="24.0"/>
+           </font>
+        </Label>
+    </AnchorPane>
+</AnchorPane>

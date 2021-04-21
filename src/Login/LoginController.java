@@ -2,8 +2,7 @@ package Login;
 
 import DBConnection.DBConnect;
 import Main.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import MainWindow.MainWindowController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -80,6 +79,23 @@ public class LoginController implements Initializable {
 
             if (rs.next()){
                 System.out.println("Login Successful!");
+                this.fullName = rs.getString("fullName");
+
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("../MainWindow/MainWindow.fxml"));
+                    Parent root = loader.load();
+
+                    MainWindowController user = loader.getController();
+                    user.setUserData(this.fullName, this.uName);
+
+                    Main.primaryStage.setTitle("Books Management System (BMS)");
+                    Main.primaryStage.setScene(new Scene(root));
+                    Main.primaryStage.centerOnScreen();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 // TODO - Add code to direct to the next Stage.
             }else{
                 System.out.println("Login Failed!");
@@ -113,6 +129,7 @@ public class LoginController implements Initializable {
             stageForNewUser.initOwner(Main.primaryStage);
             stageForNewUser.initModality(Modality.APPLICATION_MODAL);
             stageForNewUser.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageForNewUser.centerOnScreen();
             stageForNewUser.show();
         } catch (IOException e) {
             e.printStackTrace();

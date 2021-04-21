@@ -20,6 +20,7 @@ public class Main extends Application {
         Main.primaryStage.setScene(new Scene(root));
         Main.primaryStage.setResizable(false);
         Main.primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+        Main.primaryStage.centerOnScreen();
         Main.primaryStage.show();
     }
 
