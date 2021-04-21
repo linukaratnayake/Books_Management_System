@@ -39,7 +39,7 @@ public class LoginNewUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/Logo.png"))));
+        ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
     }
 
     public void btnCancelClicked(){
