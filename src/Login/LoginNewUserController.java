@@ -1,6 +1,7 @@
 package Login;
 
-import DBConnection.DBConnect;
+import Management.DBConnection;
+import Management.PasswordHash;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,22 +52,24 @@ public class LoginNewUserController implements Initializable {
     }
 
     public void btnResetClicked(){
+        txtFullName.setText("");
         txtNewUsername.setText("");
         txtNewPassword.setText("");
         txtNewConfirmPassword.setText("");
+        checkUsername();
     }
 
     public void checkUsername(){
         username = txtNewUsername.getText();
 
         try {
-            Connection con = DBConnect.getConnection();
+            Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
             String query = "SELECT * FROM loginData WHERE username = '"+username+"'";
             ResultSet rs = stmt.executeQuery(query);
             this.usernameOK = !rs.next();
 
-            if (this.usernameOK && !username.isBlank()) {
+            if (this.usernameOK && !username.isBlank() && !username.contains(" ")) {
                 txtNewUsername.setStyle("""
                         -fx-focus-color: -fx-control-inner-background;
                             -fx-faint-focus-color: -fx-control-inner-background;
@@ -89,33 +93,38 @@ public class LoginNewUserController implements Initializable {
         }
     }
 
+
     public void btnSignUpClicked(){
-        // TODO - Add Code to detect empty username and password.
-        boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText());
+        boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText()) && !txtNewPassword.getText().isBlank();
+        boolean fullNameOK = !txtFullName.getText().isBlank();
+
         String fullName = txtFullName.getText();
         this.username = txtNewUsername.getText();
         String password = txtNewPassword.getText();
-        if (this.usernameOK && passwordOK){
+
+        if (fullNameOK && this.usernameOK && passwordOK){
 
             try {
-                Connection con = DBConnect.getConnection();
+                String passwordHash = PasswordHash.generateHash(password);
+
+                Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
-                String query = "INSERT INTO loginData (fullName, username, password) VALUES ('"+fullName+"', '"+username+"', '"+ password +"');";
+                String query = "INSERT INTO loginData (fullName, username, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+passwordHash+"');";
                 this.executed = !stmt.execute(query);
                 con.close();
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
 
         } else {
-            System.out.println("Username or Password Error!");
+            System.out.println("Error with the values entered.");
         }
 
         if (this.executed) {
             System.out.println("New Account Added Successfully!");
-            btnResetClicked();
             LoginController newUserCredentials = new LoginController();
             newUserCredentials.newAccountCreated(fullName, this.username, password);
+            btnResetClicked();
             btnCancelClicked();
         } else {
             System.out.println("Unable to create the account.");

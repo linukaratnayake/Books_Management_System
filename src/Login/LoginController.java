@@ -1,8 +1,9 @@
 package Login;
 
-import DBConnection.DBConnect;
 import Main.Main;
 import MainWindow.MainWindowController;
+import Management.DBConnection;
+import Management.PasswordHash;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,13 +72,21 @@ public class LoginController implements Initializable {
             this.uName = txtUsername.getText();
             this.pWord = txtPassword.getText();
         }
-        String query = "SELECT * from loginData WHERE username = '"+uName+"' AND password = '"+pWord+"';";
+
+        String passwordHash = null;
 
         try {
-            Connection con = DBConnect.getConnection();
+            passwordHash = PasswordHash.generateHash(pWord);
+        } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+            noSuchAlgorithmException.printStackTrace();
+        }
+
+        String query = "SELECT fullName, username from loginData WHERE username = '"+uName+"' AND hash = '"+passwordHash+"';";
+
+        try {
+            Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-
             if (rs.next()){
                 System.out.println("Login Successful!");
                 this.fullName = rs.getString("fullName");
@@ -96,14 +106,15 @@ public class LoginController implements Initializable {
                     e.printStackTrace();
                 }
 
-                // TODO - Add code to direct to the next Stage.
-            }else{
+            } else {
                 System.out.println("Login Failed!");
             }
             con.close();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
+
         uName = null;
         pWord = null;
     }

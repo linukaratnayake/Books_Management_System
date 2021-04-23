@@ -1,12 +1,11 @@
-package DBConnection;
+package Management;
 
-import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnect {
+public class DBConnection {
 
     static Connection con;
 
@@ -17,7 +16,7 @@ public class DBConnect {
         String DBPath = String.format("jdbc:sqlite:%s", DBFile.toURI().toString());
         */
 
-        URL DB_URL = DBConnect.class.getResource("/DB/BMS_DB.db");
+        URL DB_URL = DBConnection.class.getResource("/DB/BMS_DB.db");
         String DBPath = String.format("jdbc:sqlite:%s", DB_URL.toString());
 
         try {

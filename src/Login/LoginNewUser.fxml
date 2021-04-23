@@ -49,7 +49,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="78.0" layoutY="76.0" prefHeight="20.0" prefWidth="73.0" text="Full Name:">
+      <Label layoutX="73.0" layoutY="76.0" prefHeight="20.0" prefWidth="73.0" text="Full Name:">
          <font>
             <Font size="14.0" />
          </font>
