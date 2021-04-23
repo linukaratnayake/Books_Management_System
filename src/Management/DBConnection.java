@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class DBConnection {
 
@@ -17,7 +18,7 @@ public class DBConnection {
         */
 
         URL DB_URL = DBConnection.class.getResource("/DB/BMS_DB.db");
-        String DBPath = String.format("jdbc:sqlite:%s", DB_URL.toString());
+        String DBPath = String.format("jdbc:sqlite:%s", Objects.requireNonNull(DB_URL));
 
         try {
             con = DriverManager.getConnection(DBPath);

@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class LoginNewUserController implements Initializable {
@@ -41,6 +42,7 @@ public class LoginNewUserController implements Initializable {
     private String username;
     private boolean usernameOK = false;
     private boolean executed = false;
+    private byte[] salt;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,15 +103,17 @@ public class LoginNewUserController implements Initializable {
         String fullName = txtFullName.getText();
         this.username = txtNewUsername.getText();
         String password = txtNewPassword.getText();
+        String passwordHash = null;
 
         if (fullNameOK && this.usernameOK && passwordOK){
 
             try {
-                String passwordHash = PasswordHash.generateHash(password);
+                this.salt = PasswordHash.generateSalt();
+                passwordHash = PasswordHash.generateHash(password, this.salt);
 
                 Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
-                String query = "INSERT INTO loginData (fullName, username, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+passwordHash+"');";
+                String query = "INSERT INTO loginData (fullName, username, salt, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+ Arrays.toString(salt) +"', '"+passwordHash+"');";
                 this.executed = !stmt.execute(query);
                 con.close();
             } catch (SQLException | NoSuchAlgorithmException e) {
@@ -123,7 +127,7 @@ public class LoginNewUserController implements Initializable {
         if (this.executed) {
             System.out.println("New Account Added Successfully!");
             LoginController newUserCredentials = new LoginController();
-            newUserCredentials.newAccountCreated(fullName, this.username, password);
+            newUserCredentials.newAccountCreated(fullName, this.username, this.salt, passwordHash);
             btnResetClicked();
             btnCancelClicked();
         } else {

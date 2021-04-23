@@ -2,21 +2,22 @@ package Management;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class PasswordHash {
-/*
+
     public static byte[] generateSalt(){
         byte[] bytes = new byte[20];
         SecureRandom random = new SecureRandom();
         random.nextBytes(bytes);
         return bytes;
     }
-*/
-    public static String generateHash(String password /*,byte[] salt*/) throws NoSuchAlgorithmException {
+
+    public static String generateHash(String password, byte[] salt) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.reset();
         //if (salt == null) salt = generateSalt();
-        //digest.update(salt);
+        digest.update(salt);
         byte[] hashInBytes = digest.digest(password.getBytes());
 
         final char[] hexArray = "0123456789ABCDEF".toCharArray();

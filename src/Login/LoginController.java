@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -46,6 +47,8 @@ public class LoginController implements Initializable {
     private String fullName;
     private String uName;
     private String pWord;
+    private byte[] salt = new byte[20];
+    private String passwordHash;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,33 +63,51 @@ public class LoginController implements Initializable {
         });
     }
 
-    public void newAccountCreated(String fullName, String uName, String pWord){
+    public void newAccountCreated(String fullName, String uName, byte[] salt, String passwordHash){
         this.fullName = fullName;
         this.uName = uName;
-        this.pWord = pWord;
+        this.salt = salt;
+        this.passwordHash = passwordHash;
         btnLoginClicked();
     }
 
     public void btnLoginClicked(){
-        if (uName == null && pWord == null){
+        if (uName == null){
             this.uName = txtUsername.getText();
             this.pWord = txtPassword.getText();
         }
+       if (passwordHash == null) {
+           String queryToGetSalt = "SELECT salt FROM loginData WHERE username = '"+uName+"';";
+           try {
+               Connection con = DBConnection.getConnection();
+               Statement stmt = con.createStatement();
+               ResultSet rs = stmt.executeQuery(queryToGetSalt);
 
-        String passwordHash = null;
+               if (rs.next()) {
+                   String hashAsString = rs.getString("salt").replace("[", "").replace("]", "");
+                   String[] hashSplit = hashAsString.split("\\s*,\\s*");
+                   for (int i = 0; i < hashSplit.length; i++) {
+                       salt[i] = Byte.parseByte(hashSplit[i]);
+                   }
+                   System.out.println(Arrays.toString(salt));
+                   try {
+                       passwordHash = PasswordHash.generateHash(pWord, salt);
+                   } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+                       noSuchAlgorithmException.printStackTrace();
+                   }
+               }
+           }
+           catch (SQLException e) {
+               e.printStackTrace();
+           }
+       }
 
-        try {
-            passwordHash = PasswordHash.generateHash(pWord);
-        } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-            noSuchAlgorithmException.printStackTrace();
-        }
+       String queryToConfirmLogin = "SELECT fullName, username from loginData WHERE username = '"+uName+"' AND hash = '"+passwordHash+"';";
 
-        String query = "SELECT fullName, username from loginData WHERE username = '"+uName+"' AND hash = '"+passwordHash+"';";
-
-        try {
+       try {
             Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery(queryToConfirmLogin);
             if (rs.next()){
                 System.out.println("Login Successful!");
                 this.fullName = rs.getString("fullName");
@@ -110,6 +131,7 @@ public class LoginController implements Initializable {
                 System.out.println("Login Failed!");
             }
             con.close();
+            passwordHash = null;
         }
         catch (SQLException e) {
             e.printStackTrace();
