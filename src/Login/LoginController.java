@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -44,6 +45,9 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView ivLogo;
 
+    @FXML
+    private Button btnCancel;
+
     private String fullName;
     private String uName;
     private String pWord;
@@ -54,13 +58,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
         lblCreateNewAccount.setFocusTraversable(true);
-        lblCreateNewAccount.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if (lblCreateNewAccount.isFocused()) {
-                btnCreateAccountHovered();
-            } else {
-                btnCreateAccountNotHovered();
-            }
-        });
     }
 
     public void newAccountCreated(String fullName, String uName, byte[] salt, String passwordHash){
@@ -123,6 +120,7 @@ public class LoginController implements Initializable {
                     Main.primaryStage.setTitle("Books Management System (BMS)");
                     Main.primaryStage.setScene(new Scene(root));
                     Main.primaryStage.centerOnScreen();
+                    Main.primaryStage.setResizable(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -142,6 +140,7 @@ public class LoginController implements Initializable {
     }
 
     public void btnCancelClicked(){
+        ((Stage)btnCancel.getScene().getWindow()).close();
         System.exit(0);
     }
 
@@ -167,14 +166,6 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void btnCreateAccountHovered(){
-        lblCreateNewAccount.setStyle("-fx-text-fill: #05077F; -fx-font-size: 17px;");
-    }
-
-    public void btnCreateAccountNotHovered(){
-        lblCreateNewAccount.setStyle("-fx-text-fill: #2300D5; -fx-font-size: 16px;");
     }
 
     public void enterPressedOnCreateNewUser(KeyEvent event){

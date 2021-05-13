@@ -2,6 +2,7 @@ package MainWindow;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ImageView ivLogo;
+
+    @FXML
+    private Button btnAdd, btnUpdate, btnDelete;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

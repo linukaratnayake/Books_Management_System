@@ -58,7 +58,7 @@ public class LoginNewUserController implements Initializable {
         txtNewUsername.setText("");
         txtNewPassword.setText("");
         txtNewConfirmPassword.setText("");
-        checkUsername();
+        txtNewUsername.setStyle("fx-faint-focus-color: -fx-control-faint-focus-color;");
     }
 
     public void checkUsername(){

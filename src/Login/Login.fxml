@@ -25,40 +25,40 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsername" layoutX="232.0" layoutY="62.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="193.0" promptText="Type username here.">
+      <TextField fx:id="txtUsername" layoutX="232.0" layoutY="62.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="193.0" promptText="Enter Username" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="txtPassword" layoutX="232.0" layoutY="120.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="194.0" promptText="Type password here.">
+      <PasswordField fx:id="txtPassword" layoutX="232.0" layoutY="120.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="194.0" promptText="Enter Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </PasswordField>
-      <Button layoutX="314.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefWidth="100.0" text="Login">
+      <Button layoutX="314.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Login">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="lblCreateNewAccount" alignment="CENTER" layoutX="178.0" layoutY="183.0" onKeyPressed="#enterPressedOnCreateNewUser" onMouseClicked="#btnCreateAccountClicked" onMouseEntered="#btnCreateAccountHovered" onMouseExited="#btnCreateAccountNotHovered" prefHeight="26.0" prefWidth="147.0" text="Create New User" textAlignment="CENTER" textFill="#2300d5">
+      <Label id="lblCreateNewAccount" fx:id="lblCreateNewAccount" alignment="CENTER" layoutX="178.0" layoutY="183.0" onKeyPressed="#enterPressedOnCreateNewUser" onMouseClicked="#btnCreateAccountClicked" prefHeight="26.0" prefWidth="147.0" stylesheets="@../Management/StyleSheet.css" text="Create New User" textAlignment="CENTER" textFill="#878786">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="91.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="91.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
    </AnchorPane>
    <AnchorPane prefHeight="112.0" prefWidth="502.0" style="-fx-background-color: #e6bf5e; -fx-border-style: hidden hidden solid hidden; -fx-border-color: White; -fx-border-width: 3px;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <Label layoutX="128.0" layoutY="24.0" text="Books Management System (BMS)">
+      <Label layoutX="128.0" layoutY="25.0" text="Books Management System (BMS)">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
       <ImageView fx:id="ivLogo" fitHeight="93.0" fitWidth="112.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="128.0" layoutY="68.0" text="By Linuka Ratnayake">
+      <Label layoutX="128.0" layoutY="70.0" text="By Linuka Ratnayake">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

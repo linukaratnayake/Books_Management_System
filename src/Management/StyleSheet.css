@@ -1,0 +1,62 @@
+.Button {
+    -fx-background-color:  #e6bf5e;
+    -fx-background-radius: 0px;
+}
+
+.Button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #ab8526;
+}
+
+.Button:focused {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #ab8526;
+}
+
+.ButtonMain {
+    -fx-background-color:  white;
+    -fx-background-radius: 0px;
+}
+
+.ButtonMain:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #ab8526;
+}
+
+.ButtonMain:focused {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #ab8526;
+}
+.lblCreateNewAccount {
+    -fx-text-fill: #878786;
+    -fx-font-size: 16px;
+}
+
+#lblCreateNewAccount:hover {
+    -fx-text-fill: #4f4f4f;
+    -fx-font-size: 17px;
+}
+
+#lblCreateNewAccount:focused {
+    -fx-text-fill: #4f4f4f;
+    -fx-font-size: 17px;
+}
+
+.TextField: focused {
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #e6bf5e;
+}

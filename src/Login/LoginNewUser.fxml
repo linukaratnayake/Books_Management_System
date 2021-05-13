@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="423.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginNewUserController">
    <AnchorPane layoutY="112.0" prefHeight="390.0" prefWidth="492.0" style="-fx-background-color: #f2d691;">
-      <Label layoutX="144.0" layoutY="21.0" text="Login | Create New User">
+      <Label layoutX="176.0" layoutY="23.0" text="Create New User">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -30,21 +30,21 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFullName" layoutX="225.0" layoutY="73.0" prefHeight="26.0" prefWidth="204.0" promptText="Enter Full Name" />
-      <TextField fx:id="txtNewUsername" layoutX="225.0" layoutY="135.0" onKeyTyped="#checkUsername" prefHeight="26.0" prefWidth="204.0" promptText="Enter Username" />
-      <PasswordField fx:id="txtNewPassword" layoutX="224.0" layoutY="198.0" prefHeight="26.0" prefWidth="204.0" promptText="Enter Password" />
-      <PasswordField fx:id="txtNewConfirmPassword" layoutX="225.0" layoutY="260.0" prefHeight="26.0" prefWidth="204.0" promptText="Confirm Entered Password" />
-      <Button layoutX="336.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnSignUpClicked" prefHeight="38.0" prefWidth="100.0" text="Sign Up">
+      <TextField fx:id="txtFullName" layoutX="225.0" layoutY="73.0" prefHeight="26.0" prefWidth="204.0" promptText="Enter Full Name" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
+      <TextField fx:id="txtNewUsername" layoutX="225.0" layoutY="135.0" onKeyTyped="#checkUsername" prefHeight="26.0" prefWidth="204.0" promptText="Enter Username" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
+      <PasswordField fx:id="txtNewPassword" layoutX="224.0" layoutY="198.0" prefHeight="26.0" prefWidth="204.0" promptText="Enter Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
+      <PasswordField fx:id="txtNewConfirmPassword" layoutX="225.0" layoutY="260.0" prefHeight="26.0" prefWidth="204.0" promptText="Confirm Entered Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
+      <Button layoutX="336.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnSignUpClicked" prefHeight="38.0" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Sign Up">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="196.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnResetClicked" prefWidth="100.0" text="Reset">
+      <Button layoutX="196.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnResetClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Reset">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" layoutX="56.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="56.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
