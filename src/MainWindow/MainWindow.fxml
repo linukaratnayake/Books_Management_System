@@ -11,52 +11,44 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow.MainWindowController">
-    <AnchorPane layoutX="250.0" layoutY="100.0" prefHeight="668.0" prefWidth="1116.0"
-                style="-fx-background-color: #fff3d6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="253.0"
-                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-        <ButtonBar prefHeight="75.0" prefWidth="1116.0" style="-fx-background-color: #fae5b4;"
-                   AnchorPane.bottomAnchor="593.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0"
-                   AnchorPane.topAnchor="0.0">
+    <AnchorPane layoutX="250.0" layoutY="100.0" prefHeight="668.0" prefWidth="1116.0" style="-fx-background-color: #fff3d6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <ButtonBar prefHeight="75.0" prefWidth="1116.0" style="-fx-background-color: #fae5b4;" AnchorPane.bottomAnchor="593.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <buttons>
-               <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0"
-                       styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Add">
+               <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Add">
                    <font>
-                       <Font size="16.0"/>
+                       <Font size="16.0" />
                    </font>
                    <opaqueInsets>
-                       <Insets/>
+                       <Insets />
                    </opaqueInsets>
                </Button>
-               <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0"
-                       styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Update">
+               <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Update">
                    <font>
-                       <Font size="16.0"/>
+                       <Font size="16.0" />
                    </font>
                    <opaqueInsets>
-                       <Insets/>
+                       <Insets />
                    </opaqueInsets>
                </Button>
-               <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0"
-                       styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Delete">
+               <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Delete">
                    <font>
-                       <Font size="16.0"/>
+                       <Font size="16.0" />
                    </font>
                    <opaqueInsets>
-                       <Insets/>
+                       <Insets />
                    </opaqueInsets>
                </Button>
            </buttons>
         </ButtonBar>
-        <TableView layoutX="75.0" layoutY="75.0" prefHeight="555.0" prefWidth="1099.0" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+        <TableView fx:id="tblMyBooks" layoutX="75.0" layoutY="75.0" prefHeight="555.0" prefWidth="1099.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
             <columns>
-                <TableColumn prefWidth="106.13333129882812" text="Book ID"/>
-                <TableColumn prefWidth="234.13327026367188" text="Name"/>
-                <TableColumn minWidth="0.0" prefWidth="201.0667724609375" text="Author"/>
-                <TableColumn prefWidth="137.066650390625" text="Date Bought"/>
-                <TableColumn prefWidth="209.8665771484375" text="Category"/>
-                <TableColumn prefWidth="111.4666748046875" text="Finished Reading?"/>
-                <TableColumn prefWidth="98.6666259765625" text="Available?"/>
+                <TableColumn fx:id="MBBkID" prefWidth="106.13333129882812" text="Book ID" />
+                <TableColumn fx:id="MBBkName" prefWidth="234.13327026367188" text="Name" />
+                <TableColumn fx:id="MBBkAuthor" minWidth="0.0" prefWidth="201.0667724609375" text="Author" />
+                <TableColumn fx:id="MBBkDateBought" prefWidth="137.066650390625" text="Date Bought" />
+                <TableColumn fx:id="MBBkCategory" prefWidth="209.8665771484375" text="Category" />
+                <TableColumn fx:id="MBBkRead" prefWidth="111.4666748046875" text="Finished Reading?" />
+                <TableColumn fx:id="MBBkAvailable" prefWidth="98.6666259765625" text="Available?" />
             </columns>
         </TableView>
     </AnchorPane>

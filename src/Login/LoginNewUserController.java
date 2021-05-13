@@ -106,7 +106,7 @@ public class LoginNewUserController implements Initializable {
         String passwordHash = null;
 
         if (fullNameOK && this.usernameOK && passwordOK){
-
+            // TODO - New table associated with the user should be created along with the user.
             try {
                 this.salt = PasswordHash.generateSalt();
                 passwordHash = PasswordHash.generateHash(password, this.salt);

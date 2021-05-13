@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -86,7 +85,6 @@ public class LoginController implements Initializable {
                    for (int i = 0; i < hashSplit.length; i++) {
                        salt[i] = Byte.parseByte(hashSplit[i]);
                    }
-                   System.out.println(Arrays.toString(salt));
                    try {
                        passwordHash = PasswordHash.generateHash(pWord, salt);
                    } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
