@@ -106,15 +106,42 @@ public class LoginNewUserController implements Initializable {
         String passwordHash = null;
 
         if (fullNameOK && this.usernameOK && passwordOK){
-            // TODO - New table associated with the user should be created along with the user.
             try {
                 this.salt = PasswordHash.generateSalt();
                 passwordHash = PasswordHash.generateHash(password, this.salt);
 
                 Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
-                String query = "INSERT INTO loginData (fullName, username, salt, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+ Arrays.toString(salt) +"', '"+passwordHash+"');";
-                this.executed = !stmt.execute(query);
+                String queryToAddNewUser = "INSERT INTO loginData (fullName, username, salt, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+ Arrays.toString(salt) +"', '"+passwordHash+"');";
+                this.executed = !stmt.execute(queryToAddNewUser);
+
+                String queryToCreateBookTableForNewUser = "CREATE TABLE '"+this.username+"_books' ('bookID' INTEGER NOT NULL, " +
+                        "'bookName' TEXT NOT NULL, " +
+                        "'bookAuthor' TEXT, " +
+                        "'bookDateBought' TEXT, " +
+                        "'bookRead' INTEGER NOT NULL, " +
+                        "'bookAvailable' INTEGER NOT NULL, " +
+                        "'bookCategory' TEXT, " +
+                        "PRIMARY KEY('bookID' AUTOINCREMENT)" +
+                        ");";
+                stmt.execute(queryToCreateBookTableForNewUser);
+
+                String queryToCreateBorrowersTableForNewUser = "CREATE TABLE '"+this.username+"_borrowers' " +
+                        "('borrowerName' TEXT NOT NULL, " +
+                        "PRIMARY KEY('borrowerName')" +
+                        ");";
+                stmt.execute(queryToCreateBorrowersTableForNewUser);
+
+                String queryToCreateBookLendsTableForNewUser = "CREATE TABLE '"+this.username+"_bookLends' " +
+                        "('lentBookBorrower' TEXT NOT NULL, " +
+                        "'lentBooksBorrowed' TEXT NOT NULL, " +
+                        "'lentLentDate' TEXT, " +
+                        "'lentReturnedDate' TEXT, " +
+                        "FOREIGN KEY('lentBooksBorrowed') REFERENCES '"+this.username+"_books'('bookID'), " +
+                        "FOREIGN KEY('lentBookBorrower') REFERENCES '"+this.username+"_borrowers'('borrowerName') ON UPDATE CASCADE" +
+                        ");";
+                stmt.execute(queryToCreateBookLendsTableForNewUser);
+
                 con.close();
             } catch (SQLException | NoSuchAlgorithmException e) {
                 e.printStackTrace();

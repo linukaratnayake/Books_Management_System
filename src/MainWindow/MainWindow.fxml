@@ -42,13 +42,13 @@
         </ButtonBar>
         <TableView fx:id="tblMyBooks" layoutX="75.0" layoutY="75.0" prefHeight="555.0" prefWidth="1099.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
             <columns>
-                <TableColumn fx:id="MBBkID" prefWidth="106.13333129882812" text="Book ID" />
-                <TableColumn fx:id="MBBkName" prefWidth="234.13327026367188" text="Name" />
-                <TableColumn fx:id="MBBkAuthor" minWidth="0.0" prefWidth="201.0667724609375" text="Author" />
-                <TableColumn fx:id="MBBkDateBought" prefWidth="137.066650390625" text="Date Bought" />
-                <TableColumn fx:id="MBBkCategory" prefWidth="209.8665771484375" text="Category" />
-                <TableColumn fx:id="MBBkRead" prefWidth="111.4666748046875" text="Finished Reading?" />
-                <TableColumn fx:id="MBBkAvailable" prefWidth="98.6666259765625" text="Available?" />
+                <TableColumn fx:id="MyBooksBookID" prefWidth="106.13333129882812" text="Book ID" />
+                <TableColumn fx:id="MyBooksBookName" prefWidth="234.13327026367188" text="Name" />
+                <TableColumn fx:id="MyBooksBookAuthor" minWidth="0.0" prefWidth="201.0667724609375" text="Author" />
+                <TableColumn fx:id="MyBooksBookDateBought" prefWidth="137.066650390625" text="Date Bought" />
+                <TableColumn fx:id="MyBooksBookCategory" prefWidth="209.8665771484375" text="Category" />
+                <TableColumn fx:id="MyBooksBookRead" prefWidth="111.4666748046875" text="Finished Reading?" />
+                <TableColumn fx:id="MyBooksBookAvailable" prefWidth="98.6666259765625" text="Available?" />
             </columns>
         </TableView>
     </AnchorPane>

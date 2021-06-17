@@ -1,51 +1,52 @@
 package Tables;
 
+// This class is used to populate the table My Books.
 public class MyBooks {
 
-    private final String bkID;
-    private final String bkName;
-    private final String bkAuthor;
-    private final String bkDateBought;
-    private final String bkCategory;
-    private final int bkRead;
-    private final int bkAvailable;
+    private final String bookID;
+    private final String bookName;
+    private final String bookAuthor;
+    private final String bookDateBought;
+    private final String bookCategory;
+    private final int bookRead;
+    private final int bookAvailable;
 
-    public MyBooks(String bkID, String bkName, String bkAuthor, String bkDateBought, String bkCategory, int bkRead, int bkAvailable) {
-        this.bkID = bkID;
-        this.bkName = bkName;
-        this.bkAuthor = bkAuthor;
-        this.bkDateBought = bkDateBought;
-        this.bkCategory = bkCategory;
-        this.bkRead = bkRead;
-        this.bkAvailable = bkAvailable;
+    public MyBooks(String bookID, String bookName, String bookAuthor, String bookDateBought, String bookCategory, int bookRead, int bookAvailable) {
+        this.bookID = bookID;
+        this.bookName = bookName;
+        this.bookAuthor = bookAuthor;
+        this.bookDateBought = bookDateBought;
+        this.bookCategory = bookCategory;
+        this.bookRead = bookRead;
+        this.bookAvailable = bookAvailable;
     }
 
-    public String getBkID() {
-        return bkID;
+    public String getBookID() {
+        return bookID;
     }
 
-    public String getBkName() {
-        return bkName;
+    public String getBookName() {
+        return bookName;
     }
 
-    public String getBkAuthor() {
-        return bkAuthor;
+    public String getBookAuthor() {
+        return bookAuthor;
     }
 
-    public String getBkDateBought() {
-        return bkDateBought;
+    public String getBookDateBought() {
+        return bookDateBought;
     }
 
-    public String getBkCategory() {
-        return bkCategory;
+    public String getBookCategory() {
+        return bookCategory;
     }
 
-    public int getBkRead() {
-        return bkRead;
+    public int getBookRead() {
+        return bookRead;
     }
 
-    public int getBkAvailable() {
-        return bkAvailable;
+    public int getBookAvailable() {
+        return bookAvailable;
     }
 
 }

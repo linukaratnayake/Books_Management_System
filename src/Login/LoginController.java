@@ -81,7 +81,7 @@ public class LoginController implements Initializable {
 
                if (rs.next()) {
                    String hashAsString = rs.getString("salt").replace("[", "").replace("]", "");
-                   String[] hashSplit = hashAsString.split("\\s*,\\s*");
+                   String[] hashSplit = hashAsString.split("\\s*,\\s*"); //To get numbers separated with commas without spaces.
                    for (int i = 0; i < hashSplit.length; i++) {
                        salt[i] = Byte.parseByte(hashSplit[i]);
                    }
@@ -113,7 +113,9 @@ public class LoginController implements Initializable {
                     Parent root = loader.load();
 
                     MainWindowController user = loader.getController();
+                    user.setUsername(this.uName);
                     user.setUserData(this.fullName, this.uName);
+                    user.populateTableMyBooks();
 
                     Main.primaryStage.setTitle("Books Management System (BMS)");
                     Main.primaryStage.setScene(new Scene(root));

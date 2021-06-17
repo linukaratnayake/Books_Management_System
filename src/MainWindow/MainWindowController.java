@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
+
     @FXML
     private Label lblFullName;
 
@@ -37,25 +39,30 @@ public class MainWindowController implements Initializable {
     private TableView<MyBooks> tblMyBooks;
 
     @FXML
-    private TableColumn<MyBooks, String> MBBkID, MBBkName, MBBkAuthor, MBBkDateBought, MBBkCategory;
+    private TableColumn<MyBooks, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
 
     @FXML
-    private TableColumn<MyBooks, Integer> MBBkRead, MBBkAvailable;
+    private TableColumn<MyBooks, Integer> MyBooksBookRead, MyBooksBookAvailable;
+
+    private String username;
 
     ObservableList<MyBooks> listMyBooks = FXCollections.observableArrayList();
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
 
-        MBBkID.setCellValueFactory(new PropertyValueFactory<>("BkID"));
-        MBBkName.setCellValueFactory(new PropertyValueFactory<>("BkName"));
-        MBBkAuthor.setCellValueFactory(new PropertyValueFactory<>("BkAuthor"));
-        MBBkDateBought.setCellValueFactory(new PropertyValueFactory<>("BkDateBought"));
-        MBBkCategory.setCellValueFactory(new PropertyValueFactory<>("BkCategory"));
-        MBBkRead.setCellValueFactory(new PropertyValueFactory<>("BkRead"));
-        MBBkAvailable.setCellValueFactory(new PropertyValueFactory<>("BkAvailable"));
-        populateTableMyBooks();
+        MyBooksBookID.setCellValueFactory(new PropertyValueFactory<>("BookID"));
+        MyBooksBookName.setCellValueFactory(new PropertyValueFactory<>("BookName"));
+        MyBooksBookAuthor.setCellValueFactory(new PropertyValueFactory<>("BookAuthor"));
+        MyBooksBookDateBought.setCellValueFactory(new PropertyValueFactory<>("BookDateBought"));
+        MyBooksBookCategory.setCellValueFactory(new PropertyValueFactory<>("BookCategory"));
+        MyBooksBookRead.setCellValueFactory(new PropertyValueFactory<>("BookRead"));
+        MyBooksBookAvailable.setCellValueFactory(new PropertyValueFactory<>("BookAvailable"));
     }
 
     public void setUserData(String fullName, String username){
@@ -64,15 +71,15 @@ public class MainWindowController implements Initializable {
     }
 
     public void populateTableMyBooks(){
-        // TODO - Tables should populate correspond to the user.
+
         try {
             Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM books;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM '"+this.username+"_books';");
             while (rs.next()) {
-                listMyBooks.add(new MyBooks(rs.getString("bkID"), rs.getString("bkName"),rs.getString("bkAuthor"),
-                        rs.getString("bkDateBought"), rs.getString("bkCategory"),
-                        Integer.parseInt(rs.getString("bkRead")),Integer.parseInt(rs.getString("bkAvailable"))));
+                listMyBooks.add(new MyBooks(rs.getString("bookID"), rs.getString("bookName"),rs.getString("bookAuthor"),
+                        rs.getString("bookDateBought"), rs.getString("bookCategory"),
+                        Integer.parseInt(rs.getString("bookRead")),Integer.parseInt(rs.getString("bookAvailable"))));
             }
 
         } catch (SQLException throwables) {
