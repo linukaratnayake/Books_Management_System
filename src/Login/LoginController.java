@@ -115,7 +115,7 @@ public class LoginController implements Initializable {
                     MainWindowController user = loader.getController();
                     user.setUsername(this.uName);
                     user.setUserData(this.fullName, this.uName);
-                    user.populateTableMyBooks();
+                    user.populateTableMyBooks(null);
 
                     Main.primaryStage.setTitle("Books Management System (BMS)");
                     Main.primaryStage.setScene(new Scene(root));

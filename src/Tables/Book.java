@@ -1,7 +1,7 @@
 package Tables;
 
 // This class is used to populate the table My Books.
-public class MyBooks {
+public class Book {
 
     private final String bookID;
     private final String bookName;
@@ -11,7 +11,7 @@ public class MyBooks {
     private final int bookRead;
     private final int bookAvailable;
 
-    public MyBooks(String bookID, String bookName, String bookAuthor, String bookDateBought, String bookCategory, int bookRead, int bookAvailable) {
+    public Book(String bookID, String bookName, String bookAuthor, String bookDateBought, String bookCategory, int bookRead, int bookAvailable) {
         this.bookID = bookID;
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;

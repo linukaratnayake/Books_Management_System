@@ -1,15 +1,12 @@
 package MainWindow;
 
 import Management.DBConnection;
-import Tables.MyBooks;
+import Tables.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +21,9 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     @FXML
+    private Label lblMyBooks, lblBorrowedBooks, lblToBeReturned, lblFinishedReading;
+
+    @FXML
     private Label lblFullName;
 
     @FXML
@@ -33,20 +33,23 @@ public class MainWindowController implements Initializable {
     private ImageView ivLogo;
 
     @FXML
-    private Button btnAdd, btnUpdate, btnDelete;
+    private ComboBox<String> cmbCategory;
 
     @FXML
-    private TableView<MyBooks> tblMyBooks;
+    private Button btnAdd, btnUpdate, btnDelete, btnMarkAsBorrowed, btnFinishedReading;
 
     @FXML
-    private TableColumn<MyBooks, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
+    private TableView<Book> tblMyBooks;
 
     @FXML
-    private TableColumn<MyBooks, Integer> MyBooksBookRead, MyBooksBookAvailable;
+    private TableColumn<Book, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
+
+    @FXML
+    private TableColumn<Book, Integer> MyBooksBookRead, MyBooksBookAvailable;
 
     private String username;
 
-    ObservableList<MyBooks> listMyBooks = FXCollections.observableArrayList();
+    ObservableList<Book> listMyBooks = FXCollections.observableArrayList();
 
     public void setUsername(String username) {
         this.username = username;
@@ -55,14 +58,21 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+        lblMyBooks.setStyle("-fx-font-size: 26px");
 
-        MyBooksBookID.setCellValueFactory(new PropertyValueFactory<>("BookID"));
-        MyBooksBookName.setCellValueFactory(new PropertyValueFactory<>("BookName"));
-        MyBooksBookAuthor.setCellValueFactory(new PropertyValueFactory<>("BookAuthor"));
-        MyBooksBookDateBought.setCellValueFactory(new PropertyValueFactory<>("BookDateBought"));
-        MyBooksBookCategory.setCellValueFactory(new PropertyValueFactory<>("BookCategory"));
-        MyBooksBookRead.setCellValueFactory(new PropertyValueFactory<>("BookRead"));
-        MyBooksBookAvailable.setCellValueFactory(new PropertyValueFactory<>("BookAvailable"));
+        MyBooksBookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
+        MyBooksBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
+        MyBooksBookAuthor.setCellValueFactory(new PropertyValueFactory<>("bookAuthor"));
+        MyBooksBookDateBought.setCellValueFactory(new PropertyValueFactory<>("bookDateBought"));
+        MyBooksBookCategory.setCellValueFactory(new PropertyValueFactory<>("bookCategory"));
+        MyBooksBookRead.setCellValueFactory(new PropertyValueFactory<>("bookRead"));
+        MyBooksBookAvailable.setCellValueFactory(new PropertyValueFactory<>("bookAvailable"));
+
+        cmbCategory.setOnAction(actionEvent -> { // A Lambda expression, suggested by the IDE.
+            String category = cmbCategory.getValue();
+            tblMyBooks.getItems().clear();
+            populateTableMyBooks(category);
+        });
     }
 
     public void setUserData(String fullName, String username){
@@ -70,21 +80,49 @@ public class MainWindowController implements Initializable {
         lblUsername.setText("@" + username);
     }
 
-    public void populateTableMyBooks(){
+    public void populateTableMyBooks(String category){
+        String query = "SELECT * FROM '"+this.username+"_books';";
+
+        if ((category != null) && (!category.equals("All Categories"))){
+            query = "SELECT * FROM '"+this.username+"_books' WHERE bookCategory = '"+category+"';";
+        }
 
         try {
             Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM '"+this.username+"_books';");
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                listMyBooks.add(new MyBooks(rs.getString("bookID"), rs.getString("bookName"),rs.getString("bookAuthor"),
+                listMyBooks.add(new Book(rs.getString("bookID"), rs.getString("bookName"),rs.getString("bookAuthor"),
                         rs.getString("bookDateBought"), rs.getString("bookCategory"),
                         Integer.parseInt(rs.getString("bookRead")),Integer.parseInt(rs.getString("bookAvailable"))));
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         tblMyBooks.setItems(listMyBooks);
+        cmbCategory.setItems(getAvailableCategories());
+        cmbCategory.getSelectionModel().select(category);
     }
+
+    public ObservableList<String> getAvailableCategories() {
+        ObservableList<String> categories = FXCollections.observableArrayList();
+
+        try {
+            Connection con = DBConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT bookCategory FROM '"+this.username+"_books';");
+
+            while (rs.next()) {
+                if (rs.isFirst()) {
+                    categories.add("All Categories");
+                }
+                categories.add(rs.getString("bookCategory"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
 }
