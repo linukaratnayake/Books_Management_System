@@ -83,7 +83,7 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnMarkAsBorrowed" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Mark as Borrowed">
+            <Button fx:id="btnMarkAsBorrowed" disable="true" mnemonicParsing="false" onAction="#borrowBook" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Mark as Borrowed">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>
@@ -91,7 +91,7 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnFinishedReading" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Finished Reading">
+            <Button fx:id="btnFinishedReading" disable="true" mnemonicParsing="false" onAction="#markAsRead" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Finished Reading">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>

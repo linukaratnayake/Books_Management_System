@@ -74,7 +74,7 @@ public class MainWindowController implements Initializable {
             populateTableMyBooks(category);
         });
 
-        tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged());
+        tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged()); // A Lambda expression, suggested by the IDE.
     }
 
     public void setUserData(String fullName, String username){
@@ -156,5 +156,41 @@ public class MainWindowController implements Initializable {
         btnFinishedReading.setDisable(!atLeastOneNotRead);
 
         btnMarkAsBorrowed.setDisable(!allAvailable);
+    }
+
+    public void markAsRead() {
+        ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
+
+        for (Book book : selectedBooks) {
+            book.setBookRead(true);
+            // TODO add to 'Finished Reading'.
+            String query = "UPDATE '"+this.username+"_books' SET bookRead = 1 WHERE bookID = '"+book.getBookID()+"';";
+            try {
+                Connection con = DBConnection.getConnection();
+                Statement stmt = con.createStatement();
+                stmt.execute(query);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        tblMyBooks.refresh();
+    }
+
+    public void borrowBook() {
+        ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
+
+        for (Book book : selectedBooks) {
+            book.setBookAvailable(false);
+            // TODO add to 'Borrowed Books' and 'To be Returned'.
+            String query = "UPDATE '"+this.username+"_books' SET bookAvailable = 0 WHERE bookID = '"+book.getBookID()+"';";
+            try {
+                Connection con = DBConnection.getConnection();
+                Statement stmt = con.createStatement();
+                stmt.execute(query);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        tblMyBooks.refresh();
     }
 }
