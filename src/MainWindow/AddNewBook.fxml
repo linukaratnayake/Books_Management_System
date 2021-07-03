@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="542.0" prefWidth="502.0" style="-fx-background-color: #fff3d6;"
+            xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="MainWindow.AddNewBookController">
+   <AnchorPane prefHeight="89.0" prefWidth="502.0"
+               style="-fx-background-color: #e6bf5e; -fx-border-style: hidden hidden solid hidden; -fx-border-color: White; -fx-border-width: 3px;"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label layoutX="128.0" layoutY="10.0" text="Books Management System (BMS)">
+         <font>
+            <Font name="System Bold" size="22.0"/>
+         </font>
+      </Label>
+      <ImageView fx:id="ivLogo" fitHeight="80.0" fitWidth="90.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true"
+                 preserveRatio="true"/>
+      <Label layoutX="128.0" layoutY="48.0" text="By Linuka Ratnayake">
+         <font>
+            <Font name="System Bold" size="14.0"/>
+         </font>
+      </Label>
+   </AnchorPane>
+   <Label layoutX="187.0" layoutY="113.0" text="Add New Book">
+      <font>
+         <Font name="System Bold" size="18.0"/>
+      </font>
+   </Label>
+   <Label layoutX="68.0" layoutY="175.0" text="Book ID :">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="68.0" layoutY="215.0" text="Book Name :">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="68.0" layoutY="255.0" text="Author :">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="68.0" layoutY="295.0" text="Category :">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="68.0" layoutY="335.0" text="Date bought :">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="txtBookID" layoutX="200.0" layoutY="172.0" prefHeight="26.0" prefWidth="150.0"
+              promptText="Enter Book ID" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <font>
+         <Font name="Times New Roman" size="14.0"/>
+      </font>
+   </TextField>
+   <TextField fx:id="txtBookName" layoutX="200.0" layoutY="212.0" prefWidth="250.0" promptText="Enter Book Name"
+              styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <font>
+         <Font name="Times New Roman" size="14.0"/>
+      </font>
+   </TextField>
+   <TextField fx:id="txtAuthor" layoutX="200.0" layoutY="252.0" prefWidth="250.0" promptText="Enter Author's Name"
+              styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <font>
+         <Font name="Times New Roman" size="14.0"/>
+      </font>
+   </TextField>
+   <TextField fx:id="txtCategory" layoutX="201.0" layoutY="292.0" prefWidth="200.0" promptText="Book Category"
+              styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <font>
+         <Font name="Times New Roman" size="14.0"/>
+      </font>
+   </TextField>
+   <DatePicker fx:id="dpDateBought" layoutX="200.0" layoutY="332.0" promptText="yyyy-mm-dd" styleClass="DatePicker"
+               stylesheets="@../Management/StyleSheet.css"/>
+   <CheckBox fx:id="chkFinishedReading" layoutX="130.0" layoutY="390.0" mnemonicParsing="false" styleClass="CheckBox"
+             stylesheets="@../Management/StyleSheet.css" text="Finished reading the book.">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="chkBookAvailable" layoutX="130.0" layoutY="430.0" mnemonicParsing="false" styleClass="CheckBox"
+             stylesheets="@../Management/StyleSheet.css" text="Book is available to lend.">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </CheckBox>
+   <Button fx:id="btnAdd" layoutX="342.0" layoutY="475.0" mnemonicParsing="false" prefWidth="100.0" styleClass="Button"
+           stylesheets="@../Management/StyleSheet.css" text="Add">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+   <Button fx:id="btnReset" layoutX="201.0" layoutY="475.0" mnemonicParsing="false" prefWidth="100.0"
+           styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Reset">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+   <Button fx:id="btnCancel" layoutX="60.0" layoutY="475.0" mnemonicParsing="false" prefWidth="100.0"
+           styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+</AnchorPane>

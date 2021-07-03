@@ -1,21 +1,30 @@
 package MainWindow;
 
+import Main.Main;
+
 import Management.DBConnection;
 import Tables.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -192,5 +201,23 @@ public class MainWindowController implements Initializable {
             }
         }
         tblMyBooks.refresh();
+    }
+
+    public void addNewBook() {
+        Stage stageForNewBook = new Stage();
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddNewBook.fxml")));
+            // Above code was suggested by the IDE.
+            stageForNewBook.setTitle("Add New Book | Books Management System (BMS)");
+            stageForNewBook.setScene(new Scene(root));
+            stageForNewBook.setResizable(false);
+            stageForNewBook.initOwner(Main.primaryStage);
+            stageForNewBook.initModality(Modality.APPLICATION_MODAL);
+            stageForNewBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageForNewBook.centerOnScreen();
+            stageForNewBook.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

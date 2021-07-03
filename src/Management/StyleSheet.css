@@ -104,3 +104,16 @@
 .TableColumn {
     -fx-color : #ebe0c7;
 }
+
+.CheckBox: focused {
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: #e6bf5e;
+}
+
+.DatePicker: focused {
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-color: #e6bf5e;
+}

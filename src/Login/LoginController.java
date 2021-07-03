@@ -120,6 +120,7 @@ public class LoginController implements Initializable {
                     Main.primaryStage.setTitle("Books Management System (BMS)");
                     Main.primaryStage.setScene(new Scene(root));
                     Main.primaryStage.centerOnScreen();
+                    Main.primaryStage.setMaximized(true);
                     Main.primaryStage.setResizable(true);
                 } catch (IOException e) {
                     e.printStackTrace();

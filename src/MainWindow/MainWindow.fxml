@@ -59,7 +59,7 @@
                     <ComboBox fx:id="cmbCategory" prefHeight="40.0" prefWidth="200.0" promptText="Please select category" styleClass="ComboBox" stylesheets="@../Management/StyleSheet.css" />
                 </graphic>
             </Label>
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Add New">
+            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addNewBook" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Add New">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>
