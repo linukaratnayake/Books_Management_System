@@ -4,12 +4,12 @@ package Tables;
 public class Book {
 
     private final String bookID;
-    private final String bookName;
-    private final String bookAuthor;
-    private final String bookDateBought;
-    private final String bookCategory;
-    private final int bookRead;
-    private final int bookAvailable;
+    private String bookName;
+    private String bookAuthor;
+    private String bookDateBought;
+    private String bookCategory;
+    private boolean bookRead;
+    private boolean bookAvailable;
 
     public Book(String bookID, String bookName, String bookAuthor, String bookDateBought, String bookCategory, int bookRead, int bookAvailable) {
         this.bookID = bookID;
@@ -17,8 +17,8 @@ public class Book {
         this.bookAuthor = bookAuthor;
         this.bookDateBought = bookDateBought;
         this.bookCategory = bookCategory;
-        this.bookRead = bookRead;
-        this.bookAvailable = bookAvailable;
+        this.bookRead = bookRead == 1;
+        this.bookAvailable = bookAvailable == 1;
     }
 
     public String getBookID() {
@@ -41,12 +41,35 @@ public class Book {
         return bookCategory;
     }
 
-    public int getBookRead() {
-        return bookRead;
+    public String getBookRead() {
+        return bookRead ? "Yes" : "No";
     }
 
-    public int getBookAvailable() {
-        return bookAvailable;
+    public String getBookAvailable() {
+        return bookAvailable ? "Yes" : "No";
     }
 
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
+    }
+
+    public void setBookDateBought(String bookDateBought) {
+        this.bookDateBought = bookDateBought;
+    }
+
+    public void setBookCategory(String bookCategory) {
+        this.bookCategory = bookCategory;
+    }
+
+    public void setBookRead(boolean bookRead) {
+        this.bookRead = bookRead;
+    }
+
+    public void setBookAvailable(boolean bookAvailable) {
+        this.bookAvailable = bookAvailable;
+    }
 }

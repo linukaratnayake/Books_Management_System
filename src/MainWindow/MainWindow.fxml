@@ -47,64 +47,56 @@
         </Label>
     </AnchorPane>
     <AnchorPane layoutX="250.0" layoutY="100.0" prefHeight="668.0" prefWidth="1116.0" style="-fx-background-color: #fff3d6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-        <HBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="1113.0" spacing="25.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="1113.0" spacing="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
-                <Insets top="25.0"/>
+                <Insets top="25.0" />
             </padding>
             <Label contentDisplay="RIGHT" graphicTextGap="20.0" text="View by Category: ">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <graphic>
-                    <ComboBox fx:id="cmbCategory" prefHeight="40.0" prefWidth="200.0"
-                              promptText="Please select category" styleClass="ComboBox"
-                              stylesheets="@../Management/StyleSheet.css"/>
+                    <ComboBox fx:id="cmbCategory" prefHeight="40.0" prefWidth="200.0" promptText="Please select category" styleClass="ComboBox" stylesheets="@../Management/StyleSheet.css" />
                 </graphic>
             </Label>
-            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain"
-                    stylesheets="@../Management/StyleSheet.css" text="Add New">
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Add New">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain"
-                    stylesheets="@../Management/StyleSheet.css" text="Update">
+            <Button fx:id="btnUpdate" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Update">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain"
-                    stylesheets="@../Management/StyleSheet.css" text="Delete">
+            <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Delete">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnMarkAsBorrowed" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain"
-                    stylesheets="@../Management/StyleSheet.css" text="Mark as Borrowed">
+            <Button fx:id="btnMarkAsBorrowed" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Mark as Borrowed">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnFinishedReading" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain"
-                    stylesheets="@../Management/StyleSheet.css" text="Finished Reading">
+            <Button fx:id="btnFinishedReading" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Finished Reading">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
         </HBox>

@@ -73,6 +73,8 @@ public class MainWindowController implements Initializable {
             tblMyBooks.getItems().clear();
             populateTableMyBooks(category);
         });
+
+        tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged());
     }
 
     public void setUserData(String fullName, String username){
@@ -100,6 +102,7 @@ public class MainWindowController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        tblMyBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // To select multiple rows at once.
         tblMyBooks.setItems(listMyBooks);
         cmbCategory.setItems(getAvailableCategories());
         cmbCategory.getSelectionModel().select(category);
@@ -117,12 +120,41 @@ public class MainWindowController implements Initializable {
                 if (rs.isFirst()) {
                     categories.add("All Categories");
                 }
-                categories.add(rs.getString("bookCategory"));
+                String category = rs.getString("bookCategory");
+                if (!categories.contains(category)) {
+                    categories.add(category);
+                }
             }
+
+            if (categories.size() == 0) {
+                cmbCategory.setPromptText("(No Categories)");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return categories;
     }
 
+    public void rowChanged () {
+        ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
+
+        boolean atLeastOneNotRead = false;
+        boolean allAvailable = true;
+        for (Book book : selectedBooks) {
+            if (book.getBookRead().equals("No")) {
+                atLeastOneNotRead = true;
+            }
+            if (book.getBookAvailable().equals("No")) {
+                allAvailable = false;
+            }
+        }
+
+        btnUpdate.setDisable(false);
+        btnDelete.setDisable(false);
+
+        btnFinishedReading.setDisable(!atLeastOneNotRead);
+
+        btnMarkAsBorrowed.setDisable(!allAvailable);
+    }
 }

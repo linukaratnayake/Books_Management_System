@@ -115,14 +115,14 @@ public class LoginNewUserController implements Initializable {
                 String queryToAddNewUser = "INSERT INTO loginData (fullName, username, salt, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+ Arrays.toString(salt) +"', '"+passwordHash+"');";
                 this.executed = !stmt.execute(queryToAddNewUser);
 
-                String queryToCreateBookTableForNewUser = "CREATE TABLE '"+this.username+"_books' ('bookID' INTEGER NOT NULL, " +
+                String queryToCreateBookTableForNewUser = "CREATE TABLE '"+this.username+"_books' ('bookID' TEXT NOT NULL, " +
                         "'bookName' TEXT NOT NULL, " +
                         "'bookAuthor' TEXT, " +
                         "'bookDateBought' TEXT, " +
+                        "'bookCategory' TEXT, " +
                         "'bookRead' INTEGER NOT NULL, " +
                         "'bookAvailable' INTEGER NOT NULL, " +
-                        "'bookCategory' TEXT, " +
-                        "PRIMARY KEY('bookID' AUTOINCREMENT)" +
+                        "PRIMARY KEY('bookID')" +
                         ");";
                 stmt.execute(queryToCreateBookTableForNewUser);
 
