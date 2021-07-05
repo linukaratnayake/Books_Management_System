@@ -1,7 +1,6 @@
 package MainWindow;
 
 import Main.Main;
-
 import Management.DBConnection;
 import Tables.Book;
 import javafx.collections.FXCollections;
@@ -24,7 +23,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -48,7 +46,7 @@ public class MainWindowController implements Initializable {
     private Button btnAdd, btnUpdate, btnDelete, btnMarkAsBorrowed, btnFinishedReading;
 
     @FXML
-    private TableView<Book> tblMyBooks;
+    protected TableView<Book> tblMyBooks;
 
     @FXML
     private TableColumn<Book, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
@@ -56,16 +54,19 @@ public class MainWindowController implements Initializable {
     @FXML
     private TableColumn<Book, Integer> MyBooksBookRead, MyBooksBookAvailable;
 
-    private String username;
+    protected final String username;
+    private final String fullName;
+    protected String currentCategory = "All Categories";
+    private boolean comboBoxActionListenerOn = true;
 
-    ObservableList<Book> listMyBooks = FXCollections.observableArrayList();
-
-    public void setUsername(String username) {
+    public MainWindowController(String username, String fullName) {
         this.username = username;
+        this.fullName = fullName;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setUserData();
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
         lblMyBooks.setStyle("-fx-font-size: 26px");
 
@@ -77,26 +78,33 @@ public class MainWindowController implements Initializable {
         MyBooksBookRead.setCellValueFactory(new PropertyValueFactory<>("bookRead"));
         MyBooksBookAvailable.setCellValueFactory(new PropertyValueFactory<>("bookAvailable"));
 
-        cmbCategory.setOnAction(actionEvent -> { // A Lambda expression, suggested by the IDE.
-            String category = cmbCategory.getValue();
-            tblMyBooks.getItems().clear();
-            populateTableMyBooks(category);
+        cmbCategory.valueProperty().addListener((observableValue, s, t1) -> {
+            if (comboBoxActionListenerOn) {
+                tblMyBooks.getItems().clear();
+                populateTableMyBooks(cmbCategory.getValue());
+            }
         });
 
         tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged()); // A Lambda expression, suggested by the IDE.
     }
 
-    public void setUserData(String fullName, String username){
+    private void setUserData(){
         lblFullName.setText(fullName);
         lblUsername.setText("@" + username);
     }
 
     public void populateTableMyBooks(String category){
+        if (category != null) {
+            this.currentCategory = category;
+        }
+
         String query = "SELECT * FROM '"+this.username+"_books';";
 
         if ((category != null) && (!category.equals("All Categories"))){
             query = "SELECT * FROM '"+this.username+"_books' WHERE bookCategory = '"+category+"';";
         }
+
+        ObservableList<Book> listMyBooks = FXCollections.observableArrayList();
 
         try {
             Connection con = DBConnection.getConnection();
@@ -107,7 +115,9 @@ public class MainWindowController implements Initializable {
                         rs.getString("bookDateBought"), rs.getString("bookCategory"),
                         Integer.parseInt(rs.getString("bookRead")),Integer.parseInt(rs.getString("bookAvailable"))));
             }
-
+            rs.close();
+            stmt.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +127,7 @@ public class MainWindowController implements Initializable {
         cmbCategory.getSelectionModel().select(category);
     }
 
-    public ObservableList<String> getAvailableCategories() {
+    private ObservableList<String> getAvailableCategories() {
         ObservableList<String> categories = FXCollections.observableArrayList();
 
         try {
@@ -134,6 +144,9 @@ public class MainWindowController implements Initializable {
                     categories.add(category);
                 }
             }
+            rs.close();
+            stmt.close();
+            con.close();
 
             if (categories.size() == 0) {
                 cmbCategory.setPromptText("(No Categories)");
@@ -145,7 +158,7 @@ public class MainWindowController implements Initializable {
         return categories;
     }
 
-    public void rowChanged () {
+    private void rowChanged () {
         ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
 
         boolean atLeastOneNotRead = false;
@@ -167,6 +180,11 @@ public class MainWindowController implements Initializable {
         btnMarkAsBorrowed.setDisable(!allAvailable);
     }
 
+    public void refreshTable() {
+        rowChanged();
+        tblMyBooks.refresh();
+    }
+
     public void markAsRead() {
         ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
 
@@ -182,7 +200,7 @@ public class MainWindowController implements Initializable {
                 e.printStackTrace();
             }
         }
-        tblMyBooks.refresh();
+        refreshTable();
     }
 
     public void borrowBook() {
@@ -200,14 +218,16 @@ public class MainWindowController implements Initializable {
                 e.printStackTrace();
             }
         }
-        tblMyBooks.refresh();
+        refreshTable();
     }
 
     public void addNewBook() {
         Stage stageForNewBook = new Stage();
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddNewBook.fxml")));
-            // Above code was suggested by the IDE.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddNewBook.fxml"));
+            AddNewBookController addNewBookController = new AddNewBookController(this.username);
+            loader.setController(addNewBookController);
+            Parent root = loader.load();
             stageForNewBook.setTitle("Add New Book | Books Management System (BMS)");
             stageForNewBook.setScene(new Scene(root));
             stageForNewBook.setResizable(false);
@@ -216,6 +236,12 @@ public class MainWindowController implements Initializable {
             stageForNewBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
             stageForNewBook.centerOnScreen();
             stageForNewBook.show();
+            stageForNewBook.setOnHiding(windowEvent -> {
+                comboBoxActionListenerOn = false;
+                populateTableMyBooks(currentCategory);
+                comboBoxActionListenerOn = true;
+                // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
+            }); // A lambda expression, suggested by the IDE.
         } catch (IOException e) {
             e.printStackTrace();
         }

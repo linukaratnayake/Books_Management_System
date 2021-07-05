@@ -108,13 +108,11 @@ public class LoginController implements Initializable {
                 this.fullName = rs.getString("fullName");
 
                 try {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("../MainWindow/MainWindow.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../MainWindow/MainWindow.fxml"));
+                    MainWindowController user = new MainWindowController(this.uName, this.fullName);
+                    loader.setController(user);
                     Parent root = loader.load();
 
-                    MainWindowController user = loader.getController();
-                    user.setUsername(this.uName);
-                    user.setUserData(this.fullName, this.uName);
                     user.populateTableMyBooks(null);
 
                     Main.primaryStage.setTitle("Books Management System (BMS)");
