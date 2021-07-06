@@ -1,6 +1,7 @@
 package MainWindow;
 
 import Management.DBConnection;
+import Tables.Book;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,14 +15,13 @@ import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class AddNewBookController implements Initializable {
+public class UpdateBookController implements Initializable {
 
     @FXML
     private ImageView ivLogo;
@@ -36,12 +36,14 @@ public class AddNewBookController implements Initializable {
     private CheckBox chkFinishedReading, chkBookAvailable;
 
     @FXML
-    private Button btnAdd, btnReset, btnCancel;
+    private Button btnUpdate, btnReset, btnCancel;
 
     private final String username;
+    private final Book book;
 
-    public AddNewBookController(String username) {
+    public UpdateBookController(String username, Book book) {
         this.username = username;
+        this.book = book;
     }
 
     @Override
@@ -69,12 +71,35 @@ public class AddNewBookController implements Initializable {
                 return LocalDate.parse(dateString, dateTimeFormatter);
             }
         });
+        getData();
     }
 
-    public void addNewBook() {
+    public void getData() {
+        txtBookID.setText(this.book.getBookID());
+        txtBookName.setText(this.book.getBookName());
+        txtAuthor.setText(this.book.getBookAuthor());
+        txtCategory.setText(this.book.getBookCategory());
 
-        boolean bookExists = false;
-        String newBookID = txtBookID.getText();
+        String[] date = this.book.getBookDateBought().split("-");
+        boolean allValidDigits = true;
+        for (String s : date) {
+            if (!s.matches("[0-9]+")) {
+                allValidDigits = false;
+                break;
+            }
+        }
+        if (allValidDigits) {
+            dpDateBought.setValue(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
+        } else {
+            dpDateBought.setValue(null);
+        }
+
+        chkFinishedReading.setSelected(this.book.getBookRead().equals("Yes"));
+        chkBookAvailable.setSelected(this.book.getBookAvailable().equals("Yes"));
+    }
+
+    public void updateBook() {
+        String bookID = txtBookID.getText();
         String bookName = txtBookName.getText();
         String author = txtAuthor.getText();
         String category = txtCategory.getText();
@@ -82,53 +107,39 @@ public class AddNewBookController implements Initializable {
         int finishedReading = chkFinishedReading.isSelected() ? 1 : 0;
         int bookAvailable = chkBookAvailable.isSelected() ? 1 : 0;
 
-        String queryToCheckBookExists = "SELECT * FROM '"+this.username+"_books' WHERE bookID = '"+newBookID+"';";
-
-        try {
-            Connection con = DBConnection.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(queryToCheckBookExists);
-
-            if (rs.next()) {
-                bookExists = true;
-            }
-            rs.close();
-            stmt.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if ((!bookExists) && (!newBookID.isBlank()) && (!bookName.isBlank())){
-
-            String queryToAdd = "INSERT INTO '"+this.username+"_books' VALUES (" +
-                    "'"+newBookID+"', " +
-                    "\""+bookName+"\", " +
-                    "'"+author+"', " +
-                    "'"+dateBought+"', " +
-                    "'"+category+"', " +
-                    "'"+finishedReading+"', " +
-                    "'"+bookAvailable+"'" +
-                    ");";
+        if (!bookName.isBlank()) {
+            String queryToUpdate = "UPDATE '"+this.username+"_books' SET " +
+                    "bookName = \""+bookName+"\", " +
+                    "bookAuthor = '"+author+"', " +
+                    "bookDateBought = '"+dateBought+"', " +
+                    "bookCategory = '"+category+"', " +
+                    "bookRead = '"+finishedReading+"', " +
+                    "bookAvailable = '"+bookAvailable+"'" +
+                    "WHERE bookID = '"+bookID+"';";
 
             try {
                 Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
-                stmt.execute(queryToAdd);
+                stmt.execute(queryToUpdate);
                 stmt.close();
                 con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            this.book.setBookName(bookName);
+            this.book.setBookAuthor(author);
+            this.book.setBookCategory(category);
+            this.book.setBookDateBought(dateBought);
+            this.book.setBookRead(finishedReading == 1);
+            this.book.setBookAvailable(bookAvailable == 1);
             cancel();
         } else {
-            System.out.println("Book already exists or invalid BookID or BookName.");
-            // TODO display a dialog.
+            System.out.println("Book name cannot be blank.");
         }
     }
 
     public void reset() {
-        txtBookID.setText("");
         txtBookName.setText("");
         txtAuthor.setText("");
         txtCategory.setText("");

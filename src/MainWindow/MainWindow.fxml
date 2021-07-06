@@ -67,7 +67,7 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnUpdate" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Update">
+            <Button fx:id="btnUpdate" disable="true" mnemonicParsing="false" onAction="#updateBook" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Update">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>
@@ -75,7 +75,7 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
-            <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Delete">
+            <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" onAction="#deleteBooks" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Delete">
                 <font>
                     <Font name="System Bold" size="16.0" />
                 </font>

@@ -172,7 +172,7 @@ public class MainWindowController implements Initializable {
             }
         }
 
-        btnUpdate.setDisable(false);
+        btnUpdate.setDisable(selectedBooks.size() != 1);
         btnDelete.setDisable(false);
 
         btnFinishedReading.setDisable(!atLeastOneNotRead);
@@ -245,5 +245,53 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateBook() {
+        Book book = tblMyBooks.getSelectionModel().getSelectedItem();
+
+        Stage stageToUpdateBook = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateBook.fxml"));
+            UpdateBookController updateBookController = new UpdateBookController(this.username, book);
+            loader.setController(updateBookController);
+            Parent root = loader.load();
+            stageToUpdateBook.setTitle("Update Book Details | Books Management System (BMS)");
+            stageToUpdateBook.setScene(new Scene(root));
+            stageToUpdateBook.setResizable(false);
+            stageToUpdateBook.initOwner(Main.primaryStage);
+            stageToUpdateBook.initModality(Modality.APPLICATION_MODAL);
+            stageToUpdateBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageToUpdateBook.centerOnScreen();
+            stageToUpdateBook.show();
+            stageToUpdateBook.setOnHiding(windowEvent -> refreshTable()); // A lambda expression, suggested by the IDE.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteBooks() {
+        ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
+
+        // TODO Confirmation dialog ,must appear here.
+
+        for (Book book : selectedBooks) {
+            String bookID = book.getBookID();
+            String queryToDelete = "DELETE FROM '"+this.username+"_books' WHERE bookID = '"+bookID+"';";
+            try {
+                Connection con = DBConnection.getConnection();
+                Statement stmt = con.createStatement();
+                stmt.execute(queryToDelete);
+                stmt.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        comboBoxActionListenerOn = false;
+        populateTableMyBooks(this.currentCategory);
+        comboBoxActionListenerOn = true;
+        // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
     }
 }
