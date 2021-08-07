@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -293,5 +294,20 @@ public class MainWindowController implements Initializable {
         populateTableMyBooks(this.currentCategory);
         comboBoxActionListenerOn = true;
         // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
+    }
+
+    public void logout() {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../Login/Login.fxml")));
+            Main.primaryStage.setTitle("Login | Books Management System (BMS)");
+            Main.primaryStage.setMaximized(false);
+            Main.primaryStage.setScene(new Scene(root));
+            Main.primaryStage.centerOnScreen();
+            Main.primaryStage.setResizable(false);
+            Main.primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            Main.primaryStage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

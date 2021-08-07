@@ -128,16 +128,21 @@
             </font>
         </Label>
         <AnchorPane layoutX="1014.0" layoutY="6.0" prefHeight="100.0" prefWidth="343.0" style="-fx-border-style: hidden hidden hidden solid; -fx-border-color: White; -fx-border-width: 3px;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label fx:id="lblFullName" layoutX="82.0" layoutY="20.0" text="firstName lastName">
+            <Label fx:id="lblFullName" layoutX="71.0" layoutY="17.0" text="firstName lastName">
                 <font>
                     <Font name="System Bold" size="20.0" />
                 </font>
             </Label>
-            <Label fx:id="lblUsername" layoutX="83.0" layoutY="65.0" text="\@username">
+            <Label fx:id="lblUsername" layoutX="72.0" layoutY="45.0" text="\@username">
                 <font>
                     <Font name="Consolas" size="16.0" />
                 </font>
             </Label>
+         <Label id="lblLogout" fx:id="lblLogout" alignment="CENTER" layoutX="72.0" layoutY="70.0" onMouseClicked="#logout" stylesheets="@../Management/StyleSheet.css" text="Logout" textFill="#878786">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
         </AnchorPane>
     </AnchorPane>
 </AnchorPane>

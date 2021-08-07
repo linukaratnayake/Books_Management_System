@@ -94,6 +94,16 @@
     -fx-font-size: 17px;
 }
 
+#lblLogout:hover {
+    -fx-text-fill: #4f4f4f;
+    -fx-font-size: 17px;
+}
+
+#lblLogout:focused {
+    -fx-text-fill: #4f4f4f;
+    -fx-font-size: 17px;
+}
+
 .TextField: focused {
     -fx-faint-focus-color: -fx-control-inner-background;
     -fx-border-width: 2px;
