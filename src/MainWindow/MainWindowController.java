@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -29,7 +30,10 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     @FXML
-    private Label lblMyBooks, lblBorrowedBooks, lblToBeReturned, lblFinishedReading;
+    private AnchorPane paneMyBooks, paneBorrowedFromMe;
+
+    @FXML
+    private Label lblMyBooks, lblBorrowedFromMe, lblToBeReturned, lblFinishedReading;
 
     @FXML
     private Label lblFullName;
@@ -47,13 +51,20 @@ public class MainWindowController implements Initializable {
     private Button btnAdd, btnUpdate, btnDelete, btnMarkAsBorrowed, btnFinishedReading;
 
     @FXML
-    protected TableView<Book> tblMyBooks;
+    protected TableView<Book> tblMyBooks, tblBorrowedFromMe;
 
     @FXML
     private TableColumn<Book, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
 
     @FXML
     private TableColumn<Book, Integer> MyBooksBookRead, MyBooksBookAvailable;
+
+    @FXML
+    private TableColumn<Book, String> BorrowedFromMeBorrower, BorrowedFromMeBookID, BorrowedFromMeBookName, BorrowedFromMeBookAuthor,
+            BorrowedFromMeDateBorrowed, BorrowedFromMeDateReturned;
+
+    @FXML
+    private TableColumn<Book, Integer> BorrowedFromMeReturned;
 
     protected final String username;
     private final String fullName;
@@ -67,9 +78,12 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        paneBorrowedFromMe.setVisible(false);
+        // TODO - Set other pane visibilities too.
+
         setUserData();
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
-        lblMyBooks.setStyle("-fx-font-size: 26px");
+       // lblMyBooks.setStyle("-fx-font-size: 26px");
 
         MyBooksBookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
         MyBooksBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
@@ -79,6 +93,14 @@ public class MainWindowController implements Initializable {
         MyBooksBookRead.setCellValueFactory(new PropertyValueFactory<>("bookRead"));
         MyBooksBookAvailable.setCellValueFactory(new PropertyValueFactory<>("bookAvailable"));
 
+        BorrowedFromMeBorrower.setCellValueFactory(new PropertyValueFactory<>("borrowerName"));
+        BorrowedFromMeBookID.setCellValueFactory(new PropertyValueFactory<>("bookID"));
+        BorrowedFromMeBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
+        BorrowedFromMeBookAuthor.setCellValueFactory(new PropertyValueFactory<>("bookAuthor"));
+        BorrowedFromMeDateBorrowed.setCellValueFactory(new PropertyValueFactory<>("bookDateBorrowed"));
+        BorrowedFromMeDateReturned.setCellValueFactory(new PropertyValueFactory<>("bookDateReturned"));
+        BorrowedFromMeReturned.setCellValueFactory(new PropertyValueFactory<>("bookReturned"));
+
         cmbCategory.valueProperty().addListener((observableValue, s, t1) -> {
             if (comboBoxActionListenerOn) {
                 tblMyBooks.getItems().clear();
@@ -87,6 +109,7 @@ public class MainWindowController implements Initializable {
         });
 
         tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged()); // A Lambda expression, suggested by the IDE.
+        populateTableBorrowedFromMe();
     }
 
     private void setUserData(){
@@ -157,6 +180,41 @@ public class MainWindowController implements Initializable {
             e.printStackTrace();
         }
         return categories;
+    }
+
+    public void populateTableBorrowedFromMe () {
+        ObservableList<Book> listBorrowedBooks = FXCollections.observableArrayList();
+
+        String query = "SELECT "+this.username+"_borrowers.borrowerName, " +
+                ""+this.username+"_books.bookID, " +
+                ""+this.username+"_books.bookName, " +
+                ""+this.username+"_books.bookAuthor, " +
+                ""+this.username+"_borrowedBooks.dateBorrowed, " +
+                ""+this.username+"_borrowedBooks.dateReturned, " +
+                ""+this.username+"_borrowedBooks.returned " +
+                "FROM "+this.username+"_borrowedBooks " +
+                "LEFT JOIN "+this.username+"_borrowers ON "+this.username+"_borrowers.borrowerID = "+this.username+"_borrowedBooks.borrowerID " +
+                "LEFT JOIN "+this.username+"_books ON "+this.username+"_books.bookID = "+this.username+"_borrowedBooks.bookID;";
+
+        try {
+            Connection con = DBConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                listBorrowedBooks.add(new Book(rs.getString("borrowerName"), rs.getString("bookID"),
+                        rs.getString("bookName"), rs.getString("bookAuthor"),
+                        rs.getString("dateBorrowed"), rs.getString("dateReturned"),
+                        Integer.parseInt(rs.getString("returned"))));
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tblBorrowedFromMe.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tblBorrowedFromMe.setItems(listBorrowedBooks);
     }
 
     private void rowChanged () {
@@ -309,5 +367,15 @@ public class MainWindowController implements Initializable {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void loadPaneMyBooks () {
+        paneMyBooks.setVisible(true);
+        paneBorrowedFromMe.setVisible(false);
+    }
+
+    public void loadPaneBorrowedFromMe () {
+        paneMyBooks.setVisible(false);
+        paneBorrowedFromMe.setVisible(true);
     }
 }

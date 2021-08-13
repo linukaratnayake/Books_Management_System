@@ -115,7 +115,8 @@ public class LoginNewUserController implements Initializable {
                 String queryToAddNewUser = "INSERT INTO loginData (fullName, username, salt, hash) VALUES ('"+fullName+"', '"+this.username+"', '"+ Arrays.toString(salt) +"', '"+passwordHash+"');";
                 this.executed = !stmt.execute(queryToAddNewUser);
 
-                String queryToCreateBookTableForNewUser = "CREATE TABLE '"+this.username+"_books' ('bookID' TEXT NOT NULL, " +
+                String queryToCreateBooksTableForNewUser = "CREATE TABLE '"+this.username+"_books' " +
+                        "('bookID' TEXT NOT NULL, " +
                         "'bookName' TEXT NOT NULL, " +
                         "'bookAuthor' TEXT, " +
                         "'bookDateBought' TEXT, " +
@@ -124,13 +125,26 @@ public class LoginNewUserController implements Initializable {
                         "'bookAvailable' INTEGER NOT NULL, " +
                         "PRIMARY KEY('bookID')" +
                         ");";
-                stmt.execute(queryToCreateBookTableForNewUser);
+                stmt.execute(queryToCreateBooksTableForNewUser);
 
                 String queryToCreateBorrowersTableForNewUser = "CREATE TABLE '"+this.username+"_borrowers' " +
-                        "('borrowerName' TEXT NOT NULL, " +
-                        "PRIMARY KEY('borrowerName')" +
+                        "('borrowerID' INTEGER NOT NULL, " +
+                        "'borrowerName' TEXT NOT NULL, " +
+                        "'borrowerDescription' TEXT, " +
+                        "PRIMARY KEY('borrowerID' AUTOINCREMENT)" +
                         ");";
                 stmt.execute(queryToCreateBorrowersTableForNewUser);
+
+                String queryToCreateBorrowedBooksTableForNewUser = "CREATE TABLE '"+this.username+"_borrowedBooks' " +
+                        "('borrowerID' TEXT NOT NULL, " +
+                        "'bookID' TEXT NOT NULL, " +
+                        "'dateBorrowed' TEXT, " +
+                        "'dateReturned' TEXT, " +
+                        "'returned' INTEGER, " +
+                        "FOREIGN KEY ('borrowerID') REFERENCES '"+this.username+"_borrowers' ('borrowerID')" +
+                        "FOREIGN KEY ('bookID') REFERENCES '"+this.username+"_books' ('bookID')" +
+                        ");";
+                stmt.execute(queryToCreateBorrowedBooksTableForNewUser);
 
                 String queryToCreateBookLendsTableForNewUser = "CREATE TABLE '"+this.username+"_bookLends' " +
                         "('lentBookBorrower' TEXT NOT NULL, " +
