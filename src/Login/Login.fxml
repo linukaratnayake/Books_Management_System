@@ -25,27 +25,27 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsername" layoutX="232.0" layoutY="62.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="193.0" promptText="Enter Username" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <TextField fx:id="txtUsername" layoutX="232.0" layoutY="62.0" onKeyPressed="#enterPressedOnLoginScreen" prefHeight="30.0" prefWidth="193.0" promptText="Enter Username" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="txtPassword" layoutX="232.0" layoutY="120.0" onKeyPressed="#enterPressed" prefHeight="30.0" prefWidth="194.0" promptText="Enter Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
+      <PasswordField fx:id="txtPassword" layoutX="232.0" layoutY="120.0" onKeyPressed="#enterPressedOnLoginScreen" prefHeight="30.0" prefWidth="194.0" promptText="Enter Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
       </PasswordField>
-      <Button layoutX="314.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Login">
+      <Button layoutX="314.0" layoutY="232.0" mnemonicParsing="false" onAction="#login" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Login">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label id="lblCreateNewAccount" fx:id="lblCreateNewAccount" alignment="CENTER" layoutX="178.0" layoutY="183.0" onKeyPressed="#enterPressedOnCreateNewUser" onMouseClicked="#btnCreateAccountClicked" prefHeight="26.0" prefWidth="147.0" stylesheets="@../Management/StyleSheet.css" text="Create New User" textAlignment="CENTER" textFill="#878786">
+      <Label id="lblCreateNewAccount" fx:id="lblCreateNewAccount" alignment="CENTER" layoutX="178.0" layoutY="183.0" onKeyPressed="#enterPressedOnCreateNewUser" onMouseClicked="#displayCreateNewAccountWindow" prefHeight="26.0" prefWidth="147.0" stylesheets="@../Management/StyleSheet.css" text="Create New User" textAlignment="CENTER" textFill="#878786">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnCancel" layoutX="91.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="91.0" layoutY="232.0" mnemonicParsing="false" onAction="#cancel" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

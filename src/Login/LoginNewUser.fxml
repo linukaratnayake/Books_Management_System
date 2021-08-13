@@ -34,17 +34,17 @@
       <TextField fx:id="txtNewUsername" layoutX="225.0" layoutY="135.0" onKeyTyped="#checkUsername" prefHeight="26.0" prefWidth="204.0" promptText="Enter Username" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
       <PasswordField fx:id="txtNewPassword" layoutX="224.0" layoutY="198.0" prefHeight="26.0" prefWidth="204.0" promptText="Enter Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
       <PasswordField fx:id="txtNewConfirmPassword" layoutX="225.0" layoutY="260.0" prefHeight="26.0" prefWidth="204.0" promptText="Confirm Entered Password" styleClass="TextField" stylesheets="@../Management/StyleSheet.css" />
-      <Button layoutX="336.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnSignUpClicked" prefHeight="38.0" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Sign Up">
+      <Button layoutX="336.0" layoutY="320.0" mnemonicParsing="false" onAction="#signUp" prefHeight="38.0" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Sign Up">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="196.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnResetClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Reset">
+      <Button layoutX="196.0" layoutY="320.0" mnemonicParsing="false" onAction="#resetTextFields" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Reset">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" layoutX="56.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnCancelClicked" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="56.0" layoutY="320.0" mnemonicParsing="false" onAction="#cancel" prefWidth="100.0" styleClass="Button" stylesheets="@../Management/StyleSheet.css" text="Cancel">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

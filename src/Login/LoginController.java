@@ -64,10 +64,10 @@ public class LoginController implements Initializable {
         this.uName = uName;
         this.salt = salt;
         this.passwordHash = passwordHash;
-        btnLoginClicked();
+        login();
     }
 
-    public void btnLoginClicked(){
+    public void login(){
         if (uName == null){
             this.uName = txtUsername.getText();
             this.pWord = txtPassword.getText();
@@ -138,18 +138,18 @@ public class LoginController implements Initializable {
         pWord = null;
     }
 
-    public void btnCancelClicked(){
+    public void cancel(){
         ((Stage)btnCancel.getScene().getWindow()).close();
         System.exit(0);
     }
 
-    public void enterPressed(KeyEvent event){
+    public void enterPressedOnLoginScreen(KeyEvent event){
         if (event.getCode().equals(KeyCode.ENTER)){
-            btnLoginClicked();
+            login();
         }
     }
 
-    public void btnCreateAccountClicked(){
+    public void displayCreateNewAccountWindow(){
         Stage stageForNewUser = new Stage();
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginNewUser.fxml")));
@@ -169,7 +169,7 @@ public class LoginController implements Initializable {
 
     public void enterPressedOnCreateNewUser(KeyEvent event){
         if (event.getCode().equals(KeyCode.ENTER)){
-            btnCreateAccountClicked();
+            displayCreateNewAccountWindow();
         }
     }
 

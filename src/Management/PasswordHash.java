@@ -16,7 +16,6 @@ public class PasswordHash {
     public static String generateHash(String password, byte[] salt) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.reset();
-        //if (salt == null) salt = generateSalt();
         digest.update(salt);
         byte[] hashInBytes = digest.digest(password.getBytes());
 
@@ -31,5 +30,3 @@ public class PasswordHash {
     }
 
 }
-
-// NOTE - ADDING SALT DID NOT WORK AS EXPECTED. HENCE, I HAD TO REMOVE THAT.

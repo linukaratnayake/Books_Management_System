@@ -49,11 +49,11 @@ public class LoginNewUserController implements Initializable {
         ivLogo.setImage(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
     }
 
-    public void btnCancelClicked(){
+    public void cancel(){
         ((Stage)btnCancel.getScene().getWindow()).close();
     }
 
-    public void btnResetClicked(){
+    public void resetTextFields(){
         txtFullName.setText("");
         txtNewUsername.setText("");
         txtNewPassword.setText("");
@@ -96,7 +96,7 @@ public class LoginNewUserController implements Initializable {
     }
 
 
-    public void btnSignUpClicked(){
+    public void signUp(){
         boolean passwordOK = txtNewPassword.getText().equals(txtNewConfirmPassword.getText()) && !txtNewPassword.getText().isBlank();
         boolean fullNameOK = !txtFullName.getText().isBlank();
 
@@ -155,8 +155,8 @@ public class LoginNewUserController implements Initializable {
             System.out.println("New Account Added Successfully!");
             LoginController newUserCredentials = new LoginController();
             newUserCredentials.newAccountCreated(fullName, this.username, this.salt, passwordHash);
-            btnResetClicked();
-            btnCancelClicked();
+            resetTextFields();
+            cancel();
         } else {
             System.out.println("Unable to create the account.");
         }
