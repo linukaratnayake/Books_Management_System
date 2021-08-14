@@ -121,6 +121,13 @@ public class UpdateBookController implements Initializable {
                 Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
                 stmt.execute(queryToUpdate);
+
+                if (bookAvailable == 1) {
+                    String queryToUpdateBookAvailability = "UPDATE '"+this.username+"_borrowedBooks' SET returned = 1 " +
+                            "WHERE bookID = '"+bookID+"';";
+                    stmt.execute(queryToUpdateBookAvailability);
+                }
+
                 stmt.close();
                 con.close();
             } catch (SQLException e) {

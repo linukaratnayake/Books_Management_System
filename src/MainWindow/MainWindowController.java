@@ -249,7 +249,6 @@ public class MainWindowController implements Initializable {
 
         for (Book book : selectedBooks) {
             book.setBookRead(true);
-            // TODO add to 'Finished Reading'.
             String query = "UPDATE '"+this.username+"_books' SET bookRead = 1 WHERE bookID = '"+book.getBookID()+"';";
             try {
                 Connection con = DBConnection.getConnection();
@@ -265,19 +264,32 @@ public class MainWindowController implements Initializable {
     public void borrowBook() {
         ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
 
-        for (Book book : selectedBooks) {
-            book.setBookAvailable(false);
-            // TODO add to 'Borrowed Books' and 'To be Returned'.
-            String query = "UPDATE '"+this.username+"_books' SET bookAvailable = 0 WHERE bookID = '"+book.getBookID()+"';";
-            try {
-                Connection con = DBConnection.getConnection();
-                Statement stmt = con.createStatement();
-                stmt.execute(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        Stage stageToLendBook = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LendBook.fxml"));
+            LendBookController lendBookController = new LendBookController(this.username, selectedBooks);
+            loader.setController(lendBookController);
+            Parent root = loader.load();
+            lendBookController.populateTableSelectedBooks();
+            lendBookController.populateTableBorrowers();
+            stageToLendBook.setTitle("Lend Book(s) | Books Management System (BMS)");
+            stageToLendBook.setScene(new Scene(root));
+            stageToLendBook.setResizable(false);
+            stageToLendBook.initOwner(Main.primaryStage);
+            stageToLendBook.initModality(Modality.APPLICATION_MODAL);
+            stageToLendBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageToLendBook.centerOnScreen();
+            stageToLendBook.show();
+            stageToLendBook.setOnHiding(windowEvent -> {
+                comboBoxActionListenerOn = false;
+                populateTableMyBooks(currentCategory);
+                comboBoxActionListenerOn = true;
+                populateTableBorrowedFromMe();
+                // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
+            }); // A lambda expression, suggested by the IDE.
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        refreshTable();
     }
 
     public void addNewBook() {
@@ -323,7 +335,10 @@ public class MainWindowController implements Initializable {
             stageToUpdateBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
             stageToUpdateBook.centerOnScreen();
             stageToUpdateBook.show();
-            stageToUpdateBook.setOnHiding(windowEvent -> refreshTable()); // A lambda expression, suggested by the IDE.
+            stageToUpdateBook.setOnHiding(windowEvent -> {
+                refreshTable();
+                populateTableBorrowedFromMe();
+            }); // A lambda expression, suggested by the IDE.
         } catch (IOException e) {
             e.printStackTrace();
         }
