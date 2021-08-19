@@ -6,14 +6,19 @@ import Tables.Borrower;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,10 +53,12 @@ public class LendBookController implements Initializable {
 
     private final String username;
     private final ObservableList<Book> selectedBooks;
+    private final Stage parentStage;
 
-    public LendBookController(String username, ObservableList<Book> selectedBooks) {
+    public LendBookController(String username, ObservableList<Book> selectedBooks, Stage parentStage) {
         this.username = username;
         this.selectedBooks = selectedBooks;
+        this.parentStage = parentStage;
     }
 
     @Override
@@ -117,7 +124,7 @@ public class LendBookController implements Initializable {
 
     public void borrow () {
         Borrower borrower = tblBorrowers.getSelectionModel().getSelectedItem();
-        String borrowerID = "0";
+        String borrowerID;
 
         if (borrower != null) {
             borrowerID = borrower.getBorrowerID();
@@ -149,6 +156,27 @@ public class LendBookController implements Initializable {
         }
 
         cancel();
+    }
+
+    public void addNewBorrower() {
+        Stage stageToAddNewBorrower = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddNewBorrower.fxml"));
+            AddNewBorrowerController addNewBorrowerController = new AddNewBorrowerController(this.username);
+            loader.setController(addNewBorrowerController);
+            Parent root = loader.load();
+            stageToAddNewBorrower.setTitle("Add New Borrower | Books Management System (BMS)");
+            stageToAddNewBorrower.setScene(new Scene(root));
+            stageToAddNewBorrower.setResizable(false);
+            stageToAddNewBorrower.initOwner(this.parentStage);
+            stageToAddNewBorrower.initModality(Modality.APPLICATION_MODAL);
+            stageToAddNewBorrower.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageToAddNewBorrower.centerOnScreen();
+            stageToAddNewBorrower.show();
+            stageToAddNewBorrower.setOnHiding(windowEvent -> populateTableBorrowers());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void cancel() {

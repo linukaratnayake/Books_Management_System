@@ -71,6 +71,8 @@ public class MainWindowController implements Initializable {
     protected String currentCategory = "All Categories";
     private boolean comboBoxActionListenerOn = true;
 
+    Stage stageToLendBook = new Stage();
+
     public MainWindowController(String username, String fullName) {
         this.username = username;
         this.fullName = fullName;
@@ -264,10 +266,9 @@ public class MainWindowController implements Initializable {
     public void borrowBook() {
         ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
 
-        Stage stageToLendBook = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LendBook.fxml"));
-            LendBookController lendBookController = new LendBookController(this.username, selectedBooks);
+            LendBookController lendBookController = new LendBookController(this.username, selectedBooks, stageToLendBook);
             loader.setController(lendBookController);
             Parent root = loader.load();
             lendBookController.populateTableSelectedBooks();
