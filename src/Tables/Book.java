@@ -104,4 +104,12 @@ public class Book {
     public void setBookAvailable(boolean bookAvailable) {
         this.bookAvailable = bookAvailable;
     }
+
+    public void setBookReturned(boolean bookReturned) {
+        this.bookReturned = bookReturned;
+    }
+
+    public void setBookDateReturned(String bookDateReturned) {
+        this.bookDateReturned = bookDateReturned;
+    }
 }

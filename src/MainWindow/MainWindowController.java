@@ -51,6 +51,9 @@ public class MainWindowController implements Initializable {
     private Button btnAdd, btnUpdate, btnDelete, btnMarkAsBorrowed, btnFinishedReading;
 
     @FXML
+    private Button btnMarkAsReturned;
+
+    @FXML
     protected TableView<Book> tblMyBooks, tblBorrowedFromMe;
 
     @FXML
@@ -110,8 +113,9 @@ public class MainWindowController implements Initializable {
             }
         });
 
-        tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChanged()); // A Lambda expression, suggested by the IDE.
+        tblMyBooks.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChangedTblMyBooks());
         populateTableBorrowedFromMe();
+        tblBorrowedFromMe.getSelectionModel().selectedItemProperty().addListener((observableValue, book, t1) -> rowChangedTblBorrowedFromMe());
     }
 
     private void setUserData(){
@@ -219,7 +223,7 @@ public class MainWindowController implements Initializable {
         tblBorrowedFromMe.setItems(listBorrowedBooks);
     }
 
-    private void rowChanged () {
+    private void rowChangedTblMyBooks() {
         ObservableList<Book> selectedBooks = tblMyBooks.getSelectionModel().getSelectedItems();
 
         boolean atLeastOneNotRead = false;
@@ -241,9 +245,84 @@ public class MainWindowController implements Initializable {
         btnMarkAsBorrowed.setDisable(!allAvailable);
     }
 
-    public void refreshTable() {
-        rowChanged();
+    public void rowChangedTblBorrowedFromMe() {
+        ObservableList<Book> selectedBooks = tblBorrowedFromMe.getSelectionModel().getSelectedItems();
+
+        boolean notReturnedYet = true;
+
+        for (Book book : selectedBooks) {
+            if (book.getBookReturned().equals("Yes")) {
+                notReturnedYet = false;
+                break;
+            }
+        }
+
+        btnMarkAsReturned.setDisable(!notReturnedYet);
+    }
+
+    public void refreshTableMyBooks() {
+        rowChangedTblMyBooks();
         tblMyBooks.refresh();
+    }
+
+    public void refreshTableBorrowedFromMe() {
+        rowChangedTblBorrowedFromMe();
+        tblBorrowedFromMe.refresh();
+    }
+
+    public void markAsReturned() {
+        ObservableList<Book> selectedBooks = tblBorrowedFromMe.getSelectionModel().getSelectedItems();
+
+        Stage stageToGetReturnedDate = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("BookReturnDetails.fxml"));
+            BookReturnDetailsController bookReturnDetailsController = new BookReturnDetailsController();
+            loader.setController(bookReturnDetailsController);
+            Parent root = loader.load();
+            stageToGetReturnedDate.setTitle("Book Returning - Date Returned | Books Management System (BMS)");
+            stageToGetReturnedDate.setScene(new Scene(root));
+            stageToGetReturnedDate.setResizable(false);
+            stageToGetReturnedDate.initOwner(Main.primaryStage);
+            stageToGetReturnedDate.initModality(Modality.APPLICATION_MODAL);
+            stageToGetReturnedDate.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageToGetReturnedDate.centerOnScreen();
+            stageToGetReturnedDate.show();
+            stageToGetReturnedDate.setOnHiding(windowEvent -> {
+                String returnedDate = bookReturnDetailsController.getReturnedDate();
+                boolean isReturnedDateCollectedSuccessfully = bookReturnDetailsController.getReturnedDate() != null;
+
+                if (!isReturnedDateCollectedSuccessfully) {
+                    return;
+                }
+
+                for (Book book : selectedBooks) {
+                    book.setBookReturned(true);
+                    book.setBookDateReturned(returnedDate);
+
+                    String queryToUpdateTableBorrowedBooks = "UPDATE '"+this.username+"_borrowedBooks' SET dateReturned = '"+returnedDate+"', returned = 1 WHERE bookID = '"+book.getBookID()+"';";
+                    String queryToUpdateTableMyBooks = "UPDATE '"+this.username+"_books' SET bookAvailable = 1 WHERE bookID = '"+book.getBookID()+"';";
+                    try {
+                        Connection con = DBConnection.getConnection();
+                        Statement stmt = con.createStatement();
+                        stmt.execute(queryToUpdateTableBorrowedBooks);
+                        stmt.execute(queryToUpdateTableMyBooks);
+                        stmt.close();
+                        con.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                refreshTableBorrowedFromMe();
+
+                comboBoxActionListenerOn = false;
+                populateTableMyBooks(currentCategory);
+                comboBoxActionListenerOn = true;
+                // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void markAsRead() {
@@ -251,16 +330,19 @@ public class MainWindowController implements Initializable {
 
         for (Book book : selectedBooks) {
             book.setBookRead(true);
+
             String query = "UPDATE '"+this.username+"_books' SET bookRead = 1 WHERE bookID = '"+book.getBookID()+"';";
             try {
                 Connection con = DBConnection.getConnection();
                 Statement stmt = con.createStatement();
                 stmt.execute(query);
+                stmt.close();
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        refreshTable();
+        refreshTableMyBooks();
     }
 
     public void borrowBook() {
@@ -337,7 +419,7 @@ public class MainWindowController implements Initializable {
             stageToUpdateBook.centerOnScreen();
             stageToUpdateBook.show();
             stageToUpdateBook.setOnHiding(windowEvent -> {
-                refreshTable();
+                refreshTableMyBooks();
                 populateTableBorrowedFromMe();
             }); // A lambda expression, suggested by the IDE.
         } catch (IOException e) {

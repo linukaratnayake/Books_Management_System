@@ -107,47 +107,32 @@
          </columnResizePolicy>
         </TableView>
     </AnchorPane>
-    <AnchorPane fx:id="paneBorrowedFromMe" layoutX="250.0" layoutY="100.0" prefHeight="668.0" prefWidth="1116.0"
-                style="-fx-background-color: #fff3d6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="253.0"
-                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-        <HBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="1113.0" spacing="25.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <AnchorPane fx:id="paneBorrowedFromMe" layoutX="250.0" layoutY="100.0" prefHeight="668.0" prefWidth="1116.0" style="-fx-background-color: #fff3d6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <HBox alignment="TOP_CENTER" prefHeight="85.0" prefWidth="1113.0" spacing="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
-                <Insets top="25.0"/>
+                <Insets top="25.0" />
             </padding>
-            <Button fx:id="btnMarkAsReturned" disable="true" mnemonicParsing="false" prefHeight="40.0"
-                    styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Mark as Returned">
+            <Button fx:id="btnMarkAsReturned" disable="true" mnemonicParsing="false" onAction="#markAsReturned" prefHeight="40.0" styleClass="ButtonMain" stylesheets="@../Management/StyleSheet.css" text="Mark as Returned">
                 <font>
-                    <Font name="System Bold" size="16.0"/>
+                    <Font name="System Bold" size="16.0" />
                 </font>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
             </Button>
         </HBox>
-        <TableView fx:id="tblBorrowedFromMe" fixedCellSize="0.0" layoutX="75.0" layoutY="75.0" prefHeight="555.0"
-                   prefWidth="1099.0"
-                   style="-fx-selection-bar: #f7e3b2; -fx-selection-bar-non-focused: #fcf1d7; -fx-focus-color: -fx-control-inner-background;"
-                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
-                   AnchorPane.topAnchor="80.0">
+        <TableView fx:id="tblBorrowedFromMe" fixedCellSize="0.0" layoutX="75.0" layoutY="75.0" prefHeight="555.0" prefWidth="1099.0" style="-fx-selection-bar: #f7e3b2; -fx-selection-bar-non-focused: #fcf1d7; -fx-focus-color: -fx-control-inner-background;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="80.0">
            <columns>
-               <TableColumn fx:id="BorrowedFromMeBorrower" maxWidth="6000.0" prefWidth="233.33328247070312"
-                            style="-fx-color: #e6bf5e;" text="Borrower"/>
-               <TableColumn fx:id="BorrowedFromMeBookID" maxWidth="1500.0" prefWidth="233.33328247070312"
-                            style="-fx-color: #e6bf5e;" text="Book ID"/>
-               <TableColumn fx:id="BorrowedFromMeBookName" maxWidth="6000.0" prefWidth="204.2667236328125"
-                            style="-fx-color:  #e6bf5e;" text="Name of Book"/>
-               <TableColumn fx:id="BorrowedFromMeBookAuthor" maxWidth="4000.0" minWidth="0.0"
-                            prefWidth="201.0667724609375" style="-fx-color:  #e6bf5e;" text="Author"/>
-               <TableColumn fx:id="BorrowedFromMeDateBorrowed" maxWidth="2500.0" prefWidth="137.066650390625"
-                            style="-fx-color:  #e6bf5e;" text="Date Borrowed"/>
-               <TableColumn fx:id="BorrowedFromMeDateReturned" maxWidth="2500.0" prefWidth="209.8665771484375"
-                            style="-fx-color:  #e6bf5e;" text="Date Returned"/>
-               <TableColumn fx:id="BorrowedFromMeReturned" maxWidth="2000.0" prefWidth="25.0"
-                            style="-fx-color:  #e6bf5e;" text="Returned?"/>
+               <TableColumn fx:id="BorrowedFromMeBorrower" maxWidth="6000.0" prefWidth="233.33328247070312" style="-fx-color: #e6bf5e;" text="Borrower" />
+               <TableColumn fx:id="BorrowedFromMeBookID" maxWidth="1500.0" prefWidth="233.33328247070312" style="-fx-color: #e6bf5e;" text="Book ID" />
+               <TableColumn fx:id="BorrowedFromMeBookName" maxWidth="6000.0" prefWidth="204.2667236328125" style="-fx-color:  #e6bf5e;" text="Name of Book" />
+               <TableColumn fx:id="BorrowedFromMeBookAuthor" maxWidth="4000.0" minWidth="0.0" prefWidth="201.0667724609375" style="-fx-color:  #e6bf5e;" text="Author" />
+               <TableColumn fx:id="BorrowedFromMeDateBorrowed" maxWidth="2500.0" prefWidth="137.066650390625" style="-fx-color:  #e6bf5e;" text="Date Borrowed" />
+               <TableColumn fx:id="BorrowedFromMeDateReturned" maxWidth="2500.0" prefWidth="209.8665771484375" style="-fx-color:  #e6bf5e;" text="Date Returned" />
+               <TableColumn fx:id="BorrowedFromMeReturned" maxWidth="2000.0" prefWidth="25.0" style="-fx-color:  #e6bf5e;" text="Returned?" />
            </columns>
            <columnResizePolicy>
-               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
            </columnResizePolicy>
         </TableView>
     </AnchorPane>
