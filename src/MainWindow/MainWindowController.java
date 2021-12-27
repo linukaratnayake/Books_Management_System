@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
 
     @FXML
-    private AnchorPane paneMyBooks, paneBorrowedFromMe;
+    private AnchorPane paneMyBooks, paneBorrowedFromMe, paneBorrowedByMe;
 
     @FXML
     private Label lblMyBooks, lblBorrowedFromMe, lblToBeReturned, lblFinishedReading;
@@ -54,7 +54,10 @@ public class MainWindowController implements Initializable {
     private Button btnMarkAsReturned;
 
     @FXML
-    protected TableView<Book> tblMyBooks, tblBorrowedFromMe;
+    private Button btnAddNewByMe, btnUpdateByMe, btnDeleteByMe, btnMarkAsReturnedByMe;
+
+    @FXML
+    protected TableView<Book> tblMyBooks, tblBorrowedFromMe, tblBorrowedByMe;
 
     @FXML
     private TableColumn<Book, String> MyBooksBookID, MyBooksBookName, MyBooksBookAuthor, MyBooksBookDateBought, MyBooksBookCategory;
@@ -68,6 +71,13 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private TableColumn<Book, Integer> BorrowedFromMeReturned;
+
+    @FXML
+    private TableColumn<Book, String> BorrowedByMeBorrowedFrom, BorrowedByMeBookID, BorrowedByMeBookName, BorrowedByMeBookAuthor,
+            BorrowedByMeDateBorrowed, BorrowedByMeDateReturned;
+
+    @FXML
+    private TableColumn<Book, Integer> BorrowedByMeReturned;
 
     protected final String username;
     private final String fullName;
@@ -452,6 +462,32 @@ public class MainWindowController implements Initializable {
         // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
     }
 
+    public void addNewBorrowedBook() {
+        Stage stageForNewBorrowedBook = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddNewBorrowedBook.fxml"));
+            AddNewBorrowedBookController addNewBorrowedBookController = new AddNewBorrowedBookController(this.username);
+            loader.setController(addNewBorrowedBookController);
+            Parent root = loader.load();
+            stageForNewBorrowedBook.setTitle("Add New Book | Books Management System (BMS)");
+            stageForNewBorrowedBook.setScene(new Scene(root));
+            stageForNewBorrowedBook.setResizable(false);
+            stageForNewBorrowedBook.initOwner(Main.primaryStage);
+            stageForNewBorrowedBook.initModality(Modality.APPLICATION_MODAL);
+            stageForNewBorrowedBook.getIcons().add(new Image(String.valueOf(getClass().getResource("/Logo/BMS Logo.png"))));
+            stageForNewBorrowedBook.centerOnScreen();
+            stageForNewBorrowedBook.show();
+            stageForNewBorrowedBook.setOnHiding(windowEvent -> {
+//                comboBoxActionListenerOn = false;
+                // TODO - populateTableBorrowedByMeBooks
+                // populateTableMyBooks(currentCategory);
+//                comboBoxActionListenerOn = true;
+//                // Temporal disabling of the ActionListener is mandatory because it can cause an infinite loop of populating the table.
+            }); // A lambda expression, suggested by the IDE.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void logout() {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../Login/Login.fxml")));
@@ -470,10 +506,18 @@ public class MainWindowController implements Initializable {
     public void loadPaneMyBooks () {
         paneMyBooks.setVisible(true);
         paneBorrowedFromMe.setVisible(false);
+        paneBorrowedByMe.setVisible(false);
     }
 
     public void loadPaneBorrowedFromMe () {
         paneMyBooks.setVisible(false);
         paneBorrowedFromMe.setVisible(true);
+        paneBorrowedByMe.setVisible(false);
+    }
+
+    public void loadPaneBorrowedByMe () {
+        paneMyBooks.setVisible(false);
+        paneBorrowedFromMe.setVisible(false);
+        paneBorrowedByMe.setVisible(true);
     }
 }

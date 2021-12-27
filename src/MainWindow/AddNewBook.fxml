@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="542.0" prefWidth="502.0" style="-fx-background-color: #fff3d6;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="542.0" prefWidth="502.0" style="-fx-background-color: #fff3d6;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane prefHeight="89.0" prefWidth="502.0" style="-fx-background-color: #e6bf5e; -fx-border-style: hidden hidden solid hidden; -fx-border-color: White; -fx-border-width: 3px;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <Label layoutX="128.0" layoutY="10.0" text="Books Management System (BMS)">
          <font>
@@ -48,7 +48,7 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Label layoutX="68.0" layoutY="335.0" text="Date bought :">
+   <Label layoutX="68.0" layoutY="335.0" text="Date Bought :">
       <font>
          <Font size="14.0" />
       </font>

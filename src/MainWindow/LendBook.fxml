@@ -74,7 +74,7 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
    </TableView>
-   <Label layoutX="68.0" layoutY="499.0" text="Date Bororwed: ">
+   <Label layoutX="68.0" layoutY="499.0" text="Date Borrowed: ">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
